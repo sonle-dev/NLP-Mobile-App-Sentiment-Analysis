@@ -28,9 +28,9 @@ def generate_eda_visualizations(data_path: str, output_dir: str):
 
     # Bang mau chuan
     colors = {
-        'Tiêu cực': '#e74c3c',   # Do cam
-        'Tích cực': '#2ecc71',   # Xanh la
-        'Trung tính': '#3498db'  # Xanh duong
+        'Tieu cuc': '#e74c3c',   # Do cam
+        'Tich cuc': '#2ecc71',   # Xanh la
+        'Trung tinh': '#3498db'  # Xanh duong
     }
 
     # -------------------------------------------------------------
@@ -94,7 +94,7 @@ def generate_eda_visualizations(data_path: str, output_dir: str):
     print("[*] Dang xuat Bieu do 3: Ty le cam xuc theo tung ung dung...")
     app_sentiment = pd.crosstab(df['app_name'], df['sentiment'], normalize='index') * 100
     # Dam bao thu tu cot
-    order_cols = [c for c in ['Tiêu cực', 'Trung tính', 'Tích cực'] if c in app_sentiment.columns]
+    order_cols = [c for c in ['Tieu cuc', 'Trung tinh', 'Tich cuc'] if c in app_sentiment.columns]
     app_sentiment = app_sentiment[order_cols]
 
     fig, ax = plt.subplots(figsize=(12, 7))
@@ -109,7 +109,7 @@ def generate_eda_visualizations(data_path: str, output_dir: str):
     ax.set_title("Ty le phan bo cam xuc chi tiet theo tung ung dung (%)", fontsize=14, weight='bold', pad=15)
     ax.set_xlabel("Ty le phan tram (%)", fontsize=12)
     ax.set_ylabel("Ung dung", fontsize=12)
-    ax.legend(title="Lớp cảm xúc", loc='lower right', frameon=True)
+    ax.legend(title="Lop cam xuc", loc='lower right', frameon=True)
 
     # Hien thi text phan tram tren bar
     for c in ax.containers:

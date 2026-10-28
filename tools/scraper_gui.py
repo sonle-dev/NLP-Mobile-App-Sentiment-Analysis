@@ -118,13 +118,13 @@ def categorize_sentiment(rating: int) -> str:
     try:
         r = int(rating)
         if r >= 4:
-            return "Tích cực (Positive)"
+            return "Tich cuc (Positive)"
         elif r == 3:
-            return "Trung tính (Neutral)"
+            return "Trung tinh (Neutral)"
         else:
-            return "Tiêu cực (Negative)"
+            return "Tieu cuc (Negative)"
     except Exception:
-        return "Không xác định"
+        return "Khong xac dinh"
 
 
 # ==============================================================================
@@ -146,9 +146,9 @@ def scrape_google_play_reviews(
     Cao danh gia tu Google Play Store theo lo (batch) va phan trang tu dong.
     """
     if not HAS_GOOGLE_PLAY:
-        raise ImportError("Chưa cài đặt thư viện 'google-play-scraper'. Vui lòng chạy: pip install google-play-scraper")
+        raise ImportError("Chua cai dat thu vien 'google-play-scraper'. Vui long chay: pip install google-play-scraper")
 
-    log_queue.put(f"[Google Play] Bắt đầu cào app: '{app_id}' (Mục tiêu: {target_count:,} bản ghi)...")
+    log_queue.put(f"[Google Play] Bat dau cao app: '{app_id}' (Muc tieu: {target_count:,} ban ghi)...")
     
     # Xac dinh kieu sap xep
     sort_enum = gp_Sort.NEWEST if sort_type == "newest" else gp_Sort.MOST_RELEVANT
@@ -171,13 +171,13 @@ def scrape_google_play_reviews(
                 continuation_token=continuation_token
             )
         except Exception as e:
-            log_queue.put(f"[Lỗi API Google Play] {str(e)}")
+            log_queue.put(f"[Loi API Google Play] {str(e)}")
             break
 
         if not results:
             consecutive_empty += 1
             if consecutive_empty >= 2:
-                log_queue.put("[Google Play] Không còn đánh giá nào mới hơn từ Store.")
+                log_queue.put("[Google Play] Khong con danh gia nao moi hon tu Store.")
                 break
             time.sleep(1)
             continue
@@ -193,7 +193,7 @@ def scrape_google_play_reviews(
 
             all_reviews.append({
                 'review_id': r.get('reviewId', ''),
-                'user_name': r.get('userName', 'Ẩn danh'),
+                'user_name': r.get('userName', 'An danh'),
                 'rating': score,
                 'sentiment': categorize_sentiment(score),
                 'content': content,
@@ -207,18 +207,18 @@ def scrape_google_play_reviews(
 
         current_count = len(all_reviews)
         progress_queue.put((current_count, target_count))
-        log_queue.put(f"[Google Play] Đã thu thập: {current_count:,}/{target_count:,} bản ghi...")
+        log_queue.put(f"[Google Play] Da thu thap: {current_count:,}/{target_count:,} ban ghi...")
 
         # Neu khong con token tiep theo thi da het toan bo review
         if not continuation_token:
-            log_queue.put("[Google Play] Đã tải hết toàn bộ đánh giá có sẵn trên Store.")
+            log_queue.put("[Google Play] Da tai het toan bo danh gia co san tren Store.")
             break
 
         # Gian cach nhe tranh spam rate limit
         time.sleep(0.3)
 
     if stop_event.is_set():
-        log_queue.put("[Cảnh báo] Quá trình cào đã được người dùng dừng lại.")
+        log_queue.put("[Canh bao] Qua trinh cao da duoc nguoi dung dung lai.")
 
     df = pd.DataFrame(all_reviews)
     return df
@@ -237,7 +237,7 @@ def scrape_app_store_reviews(
     Cao danh gia tu Apple App Store su dung Catalog Web API hien dai (ho tro phan trang khong gioi han)
     ket hop tra cuu thong tin ung dung qua iTunes Lookup API.
     """
-    log_queue.put(f"[Apple App Store] Đang kiểm tra App ID: '{app_id}' tại khu vực '{country.upper()}'...")
+    log_queue.put(f"[Apple App Store] Dang kiem tra App ID: '{app_id}' tai khu vuc '{country.upper()}'...")
 
     # 1. Tra cuu ten va nha phat trien ung dung tren Store
     app_name = f"App ID {app_id}"
@@ -251,21 +251,21 @@ def scrape_app_store_reviews(
                 res = lookup_data['results'][0]
                 app_name = res.get('trackName', app_name)
                 seller_name = res.get('sellerName', '')
-                log_queue.put(f"[Apple App Store] ✅ Đã tìm thấy: '{app_name}' (Phát triển: {seller_name})")
+                log_queue.put(f"[Apple App Store] ✅ Da tim thay: '{app_name}' (Phat trien: {seller_name})")
             else:
                 # Thu tim o khu vuc 'us' xem co phai do nguoi dung chon nham khu vuc
                 r_us = requests.get(f"https://itunes.apple.com/lookup?id={app_id}&country=us", headers={'User-Agent': 'Mozilla/5.0'}, timeout=8)
                 if r_us.status_code == 200 and r_us.json().get('resultCount', 0) > 0:
                     res_us = r_us.json()['results'][0]
                     app_name = res_us.get('trackName', app_name)
-                    log_queue.put(f"[Gợi ý] Ứng dụng '{app_name}' được tìm thấy tại App Store US, đang tự động chuyển khu vực sang US...")
+                    log_queue.put(f"[Goi y] Ung dung '{app_name}' duoc tim thay tai App Store US, dang tu dong chuyen khu vuc sang US...")
                     country = 'us'
                 else:
-                    log_queue.put(f"[Cảnh báo] Không tìm thấy ứng dụng với ID '{app_id}'. Hãy đảm bảo bạn dán đúng link từ App Store (ví dụ: https://apps.apple.com/vn/app/.../id{app_id})")
+                    log_queue.put(f"[Canh bao] Khong tim thay ung dung voi ID '{app_id}'. Hay dam bao ban dan dung link tu App Store (vi du: https://apps.apple.com/vn/app/.../id{app_id})")
     except Exception as e:
-        log_queue.put(f"[Apple App Store] Ghi chú tra cứu: {e}")
+        log_queue.put(f"[Apple App Store] Ghi chu tra cuu: {e}")
 
-    log_queue.put(f"[Apple App Store] Bắt đầu cào đánh giá: '{app_name}' (Mục tiêu: {target_count:,} bản ghi)...")
+    log_queue.put(f"[Apple App Store] Bat dau cao danh gia: '{app_name}' (Muc tieu: {target_count:,} ban ghi)...")
 
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
@@ -299,19 +299,19 @@ def scrape_app_store_reviews(
             if resp.status_code == 429:
                 retry_429 += 1
                 if retry_429 > 3:
-                    log_queue.put("[Apple App Store] Máy chủ Apple giới hạn tốc độ. Đang tiếp tục chuyển sang kênh dự phòng...")
+                    log_queue.put("[Apple App Store] May chu Apple gioi han toc do. Dang tiep tuc chuyen sang kenh du phong...")
                     break
-                log_queue.put("[Apple App Store] Đang tạm nghỉ 2 giây theo yêu cầu của Store để tránh giới hạn tốc độ...")
+                log_queue.put("[Apple App Store] Dang tam nghi 2 giay theo yeu cau cua Store de tranh gioi han toc do...")
                 time.sleep(2)
                 continue
             else:
                 retry_429 = 0
 
             if resp.status_code == 404:
-                log_queue.put(f"[Apple App Store] HTTP 404: Không tìm thấy trang đánh giá của App '{app_id}' tại '{country}'.")
+                log_queue.put(f"[Apple App Store] HTTP 404: Khong tim thay trang danh gia cua App '{app_id}' tai '{country}'.")
                 break
             if resp.status_code != 200:
-                log_queue.put(f"[Apple App Store] Lỗi tải dữ liệu offset {offset} (HTTP {resp.status_code}).")
+                log_queue.put(f"[Apple App Store] Loi tai du lieu offset {offset} (HTTP {resp.status_code}).")
                 break
 
             data = resp.json()
@@ -320,7 +320,7 @@ def scrape_app_store_reviews(
             if not items:
                 consecutive_empty += 1
                 if consecutive_empty >= 2:
-                    log_queue.put("[Apple App Store] Đã đến trang cuối cùng của đánh giá trên Store.")
+                    log_queue.put("[Apple App Store] Da den trang cuoi cung cua danh gia tren Store.")
                     break
                 time.sleep(1)
                 continue
@@ -335,7 +335,7 @@ def scrape_app_store_reviews(
                     continue
 
                 r_id = item.get('id', '')
-                author = attr.get('userName', 'Người dùng Apple')
+                author = attr.get('userName', 'Nguoi dung Apple')
                 title = clean_text(attr.get('title', ''))
                 body = clean_text(attr.get('review', ''))
                 full_content = f"{title}. {body}".strip(" .") if title else body
@@ -366,22 +366,22 @@ def scrape_app_store_reviews(
             offset += len(items)
             current_count = len(all_reviews)
             progress_queue.put((current_count, target_count))
-            log_queue.put(f"[Apple App Store] Đã thu thập: {current_count:,}/{target_count:,} bản ghi...")
+            log_queue.put(f"[Apple App Store] Da thu thap: {current_count:,}/{target_count:,} ban ghi...")
 
             # Neu khong con link next
             if not data.get('next'):
-                log_queue.put("[Apple App Store] Đã tải hết toàn bộ đánh giá có sẵn trên Store.")
+                log_queue.put("[Apple App Store] Da tai het toan bo danh gia co san tren Store.")
                 break
 
             time.sleep(0.2)
 
         except Exception as e:
-            log_queue.put(f"[Lỗi Apple App Store] {str(e)}")
+            log_queue.put(f"[Loi Apple App Store] {str(e)}")
             break
 
     # 3. Phuong thuc du phong qua XML RSS neu Catalog API chua lay duoc ban ghi nao
     if not all_reviews and not stop_event.is_set():
-        log_queue.put("[Apple App Store] Đang thử phương thức kết nối dự phòng (RSS Feed)...")
+        log_queue.put("[Apple App Store] Dang thu phuong thuc ket noi du phong (RSS Feed)...")
         try:
             xml_url = f"https://itunes.apple.com/{country}/rss/customerreviews/id={app_id}/xml"
             xml_resp = requests.get(xml_url, headers={'User-Agent': 'iTunes/12.11.3 (Windows; Microsoft Windows 10 x64)'}, timeout=10)
@@ -397,7 +397,7 @@ def scrape_app_store_reviews(
                     title = clean_text(e.find('title').text if e.find('title') else '')
                     content = clean_text(e.find('content').text if e.find('content') else '')
                     full_content = f"{title}. {content}".strip(" .") if title else content
-                    author = e.find('author').find('name').text if e.find('author') and e.find('author').find('name') else 'Người dùng Apple'
+                    author = e.find('author').find('name').text if e.find('author') and e.find('author').find('name') else 'Nguoi dung Apple'
                     all_reviews.append({
                         'review_id': e.find('id').text if e.find('id') else '',
                         'user_name': author,
@@ -415,12 +415,12 @@ def scrape_app_store_reviews(
                         break
                 if all_reviews:
                     progress_queue.put((len(all_reviews), target_count))
-                    log_queue.put(f"[Apple App Store RSS] Đã thu thập: {len(all_reviews):,} bản ghi từ kênh dự phòng.")
+                    log_queue.put(f"[Apple App Store RSS] Da thu thap: {len(all_reviews):,} ban ghi tu kenh du phong.")
         except Exception as ex_rss:
-            log_queue.put(f"[Lỗi RSS dự phòng] {ex_rss}")
+            log_queue.put(f"[Loi RSS du phong] {ex_rss}")
 
     if stop_event.is_set():
-        log_queue.put("[Cảnh báo] Quá trình cào đã được dừng lại.")
+        log_queue.put("[Canh bao] Qua trinh cao da duoc dung lai.")
 
     return pd.DataFrame(all_reviews)
 
@@ -435,7 +435,7 @@ def scrape_generic_website(
     """
     Cao bai viet, tieu de, doan van va lien ket tu mot trang web thong thuong.
     """
-    log_queue.put(f"[Web Scraper] Bắt đầu cào trang: '{url}'...")
+    log_queue.put(f"[Web Scraper] Bat dau cao trang: '{url}'...")
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     }
@@ -445,13 +445,13 @@ def scrape_generic_website(
         resp.encoding = resp.apparent_encoding or 'utf-8'
         soup = BeautifulSoup(resp.text, 'html.parser')
     except Exception as e:
-        log_queue.put(f"[Lỗi truy cập Web] {str(e)}")
+        log_queue.put(f"[Loi truy cap Web] {str(e)}")
         return pd.DataFrame()
 
     items = []
     # 1. Tim cac tieu de h1, h2, h3 va the bai viet
     headings = soup.find_all(['h1', 'h2', 'h3', 'p', 'article', 'li'])
-    log_queue.put(f"[Web Scraper] Đã phân tích DOM, tìm thấy {len(headings):,} thẻ nội dung.")
+    log_queue.put(f"[Web Scraper] Da phan tich DOM, tim thay {len(headings):,} the noi dung.")
 
     seen_texts = set()
     for tag in headings:
@@ -472,7 +472,7 @@ def scrape_generic_website(
             'review_id': f"web_{len(items)+1}",
             'user_name': tag.name.upper(),
             'rating': 5,
-            'sentiment': 'Thông tin web',
+            'sentiment': 'Thong tin web',
             'content': text,
             'thumbs_up': 0,
             'review_date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
@@ -484,13 +484,13 @@ def scrape_generic_website(
 
         if len(items) % 50 == 0:
             progress_queue.put((len(items), target_count))
-            log_queue.put(f"[Web Scraper] Đã thu thập {len(items):,} khối nội dung...")
+            log_queue.put(f"[Web Scraper] Da thu thap {len(items):,} khoi noi dung...")
 
         if len(items) >= target_count:
             break
 
     progress_queue.put((len(items), target_count))
-    log_queue.put(f"[Web Scraper] Hoàn thành cào {len(items):,} dòng dữ liệu từ web.")
+    log_queue.put(f"[Web Scraper] Hoan thanh cao {len(items):,} dong du lieu tu web.")
     return pd.DataFrame(items)
 
 
@@ -526,18 +526,18 @@ def clean_and_process_dataframe(df: pd.DataFrame, log_queue: queue.Queue) -> pd.
     cleaned_len = len(df)
     removed = initial_len - cleaned_len
     if removed > 0:
-        log_queue.put(f"[Làm sạch] Đã lọc bỏ {removed:,} bản ghi rác/trùng lặp. Còn lại {cleaned_len:,} bản ghi chuẩn.")
+        log_queue.put(f"[Lam sach] Da loc bo {removed:,} ban ghi rac/trung lap. Con lai {cleaned_len:,} ban ghi chuan.")
     else:
-        log_queue.put(f"[Làm sạch] Dữ liệu hoàn toàn sạch sẽ ({cleaned_len:,} bản ghi hợp lệ).")
+        log_queue.put(f"[Lam sach] Du lieu hoan toan sach se ({cleaned_len:,} ban ghi hop le).")
 
     # Thong ke phan bo so sao truc quan
     if 'rating' in df.columns and cleaned_len > 0:
         counts = df['rating'].value_counts().to_dict()
-        log_queue.put("[Thống kê số sao thu thập]:")
+        log_queue.put("[Thong ke so sao thu thap]:")
         for star in [5, 4, 3, 2, 1]:
             cnt = counts.get(star, 0)
             pct = (cnt / cleaned_len) * 100
-            log_queue.put(f"   ⭐ {star} sao: {cnt:,} dòng ({pct:.1f}%)")
+            log_queue.put(f"   ⭐ {star} sao: {cnt:,} dong ({pct:.1f}%)")
 
     return df
 
@@ -564,9 +564,9 @@ def export_dataframe(
             with pd.ExcelWriter(file_path_xlsx, engine='openpyxl') as writer:
                 df.to_excel(writer, index=False, sheet_name='Data_Scraped')
             saved_files.append(file_path_xlsx)
-            log_queue.put(f"[Xuất file] Đã tạo file Excel: {file_path_xlsx}")
+            log_queue.put(f"[Xuat file] Da tao file Excel: {file_path_xlsx}")
         except Exception as e:
-            log_queue.put(f"[Lỗi xuất Excel] {str(e)}. Tự động chuyển hướng sang CSV...")
+            log_queue.put(f"[Loi xuat Excel] {str(e)}. Tu dong chuyen huong sang CSV...")
             export_format = "csv"
 
     # Xuat CSV (UTF-8 co BOM chong loi tieng Viet tren Microsoft Excel)
@@ -575,9 +575,9 @@ def export_dataframe(
         try:
             df.to_csv(file_path_csv, index=False, encoding='utf-8-sig')
             saved_files.append(file_path_csv)
-            log_queue.put(f"[Xuất file] Đã tạo file CSV (UTF-8-sig): {file_path_csv}")
+            log_queue.put(f"[Xuat file] Da tao file CSV (UTF-8-sig): {file_path_csv}")
         except Exception as e:
-            log_queue.put(f"[Lỗi xuất CSV] {str(e)}")
+            log_queue.put(f"[Loi xuat CSV] {str(e)}")
 
     return saved_files
 
@@ -653,14 +653,14 @@ class ScraperGUI:
 
         title_lbl = ttk.Label(
             header_frame,
-            text="🚀 CÔNG CỤ CÀO DỮ LIỆU ĐA NĂNG (WEB & APP REVIEWS)",
+            text="🚀 CONG CU CAO DU LIEU DA NANG (WEB & APP REVIEWS)",
             style="Header.TLabel"
         )
         title_lbl.pack(anchor="w")
 
         sub_lbl = ttk.Label(
             header_frame,
-            text="Thu thập hàng ngàn đánh giá từ Google Play Store, App Store hoặc nội dung website. Tự động làm sạch & xuất Excel / CSV chuẩn Tiếng Việt.",
+            text="Thu thap hang ngan danh gia tu Google Play Store, App Store hoac noi dung website. Tu dong lam sach & xuat Excel / CSV chuan Tieng Viet.",
             style="SubHeader.TLabel"
         )
         sub_lbl.pack(anchor="w", pady=(2, 0))
@@ -673,7 +673,7 @@ class ScraperGUI:
         row1 = ttk.Frame(input_card, style="Card.TFrame")
         row1.pack(fill="x", pady=4)
         
-        ttk.Label(row1, text="Nguồn dữ liệu:", style="Section.TLabel", width=18).pack(side="left")
+        ttk.Label(row1, text="Nguon du lieu:", style="Section.TLabel", width=18).pack(side="left")
         self.source_var = tk.StringVar(value="google_play")
         
         rb1 = ttk.Radiobutton(
@@ -689,7 +689,7 @@ class ScraperGUI:
         rb2.pack(side="left", padx=10)
 
         rb3 = ttk.Radiobutton(
-            row1, text="Trang Web thông thường (URL)", value="web",
+            row1, text="Trang Web thong thuong (URL)", value="web",
             variable=self.source_var, command=self.on_source_change
         )
         rb3.pack(side="left", padx=10)
@@ -706,12 +706,12 @@ class ScraperGUI:
         self.target_entry.insert(0, "com.shopee.vn")
 
         # Nut vi du nhanh
-        self.btn_example = ttk.Button(row2, text="Mẫu thử", command=self.fill_example, width=9)
+        self.btn_example = ttk.Button(row2, text="Mau thu", command=self.fill_example, width=9)
         self.btn_example.pack(side="right")
 
         self.lbl_hint = ttk.Label(
             input_card,
-            text="Gợi ý: Nhập Package Name (ví dụ: com.shopee.vn, com.zing.zalo) hoặc dán link Google Play đầy đủ.",
+            text="Goi y: Nhap Package Name (vi du: com.shopee.vn, com.zing.zalo) hoac dan link Google Play day du.",
             font=("Segoe UI", 8, "italic"), foreground=self.COLOR_MUTED, background=self.COLOR_CARD
         )
         self.lbl_hint.pack(anchor="w", padx=(145, 0), pady=(0, 6))
@@ -721,7 +721,7 @@ class ScraperGUI:
         row3.pack(fill="x", pady=6)
 
         # So luong
-        ttk.Label(row3, text="Số lượng:", style="Section.TLabel", width=10).pack(side="left")
+        ttk.Label(row3, text="So luong:", style="Section.TLabel", width=10).pack(side="left")
         self.count_combobox = ttk.Combobox(
             row3, values=["500", "1000", "2000", "3000", "5000", "10000", "20000"],
             width=8, font=("Segoe UI", 10)
@@ -730,55 +730,55 @@ class ScraperGUI:
         self.count_combobox.pack(side="left", padx=(0, 15))
 
         # Quoc gia
-        ttk.Label(row3, text="Quốc gia:", style="Section.TLabel").pack(side="left")
+        ttk.Label(row3, text="Quoc gia:", style="Section.TLabel").pack(side="left")
         self.country_combobox = ttk.Combobox(
-            row3, values=["vn (Việt Nam)", "us (Hoa Kỳ)", "kr (Hàn Quốc)", "jp (Nhật Bản)", "sg (Singapore)"],
+            row3, values=["vn (Viet Nam)", "us (Hoa Ky)", "kr (Han Quoc)", "jp (Nhat Ban)", "sg (Singapore)"],
             width=13, state="readonly", font=("Segoe UI", 9)
         )
-        self.country_combobox.set("vn (Việt Nam)")
+        self.country_combobox.set("vn (Viet Nam)")
         self.country_combobox.pack(side="left", padx=(5, 15))
 
         # Sap xep
-        ttk.Label(row3, text="Sắp xếp:", style="Section.TLabel").pack(side="left")
+        ttk.Label(row3, text="Sap xep:", style="Section.TLabel").pack(side="left")
         self.sort_combobox = ttk.Combobox(
-            row3, values=["Mới nhất (Newest)", "Liên quan nhất (Most Relevant)"],
+            row3, values=["Moi nhat (Newest)", "Lien quan nhat (Most Relevant)"],
             width=18, state="readonly", font=("Segoe UI", 9)
         )
-        self.sort_combobox.set("Mới nhất (Newest)")
+        self.sort_combobox.set("Moi nhat (Newest)")
         self.sort_combobox.pack(side="left", padx=(5, 15))
 
         # Loc sao
-        ttk.Label(row3, text="Lọc số sao:", style="Section.TLabel").pack(side="left")
+        ttk.Label(row3, text="Loc so sao:", style="Section.TLabel").pack(side="left")
         self.star_combobox = ttk.Combobox(
             row3, values=[
-                "Tất cả (1 - 5 sao)",
-                "Chỉ 1 sao (Rất tệ)",
-                "Chỉ 2 sao",
-                "Chỉ 3 sao",
-                "Chỉ 4 sao",
-                "Chỉ 5 sao (Tốt)"
+                "Tat ca (1 - 5 sao)",
+                "Chi 1 sao (Rat te)",
+                "Chi 2 sao",
+                "Chi 3 sao",
+                "Chi 4 sao",
+                "Chi 5 sao (Tot)"
             ],
             width=17, state="readonly", font=("Segoe UI", 9)
         )
-        self.star_combobox.set("Tất cả (1 - 5 sao)")
+        self.star_combobox.set("Tat ca (1 - 5 sao)")
         self.star_combobox.pack(side="left", padx=5)
 
         # Dong 4: Thu muc luu ket qua & Dinh dang xuat
         row4 = ttk.Frame(input_card, style="Card.TFrame")
         row4.pack(fill="x", pady=6)
 
-        ttk.Label(row4, text="Thư mục lưu:", style="Section.TLabel", width=18).pack(side="left")
+        ttk.Label(row4, text="Thu muc luu:", style="Section.TLabel", width=18).pack(side="left")
         self.save_dir_entry = ttk.Entry(row4, font=("Segoe UI", 10))
         self.save_dir_entry.pack(side="left", fill="x", expand=True, padx=(0, 8))
         self.save_dir_entry.insert(0, self.last_saved_dir)
 
-        btn_browse = ttk.Button(row4, text="📁 Chọn thư mục...", command=self.browse_folder)
+        btn_browse = ttk.Button(row4, text="📁 Chon thu muc...", command=self.browse_folder)
         btn_browse.pack(side="left", padx=(0, 15))
 
         # Dinh dang file
-        ttk.Label(row4, text="Định dạng:", style="Section.TLabel").pack(side="left")
+        ttk.Label(row4, text="Dinh dang:", style="Section.TLabel").pack(side="left")
         self.format_combobox = ttk.Combobox(
-            row4, values=["Excel (.xlsx)", "CSV (UTF-8-sig)", "Cả hai (.xlsx & .csv)"],
+            row4, values=["Excel (.xlsx)", "CSV (UTF-8-sig)", "Ca hai (.xlsx & .csv)"],
             width=18, state="readonly", font=("Segoe UI", 9)
         )
         self.format_combobox.set("Excel (.xlsx)")
@@ -789,25 +789,25 @@ class ScraperGUI:
         action_frame.pack(fill="x")
 
         self.btn_start = ttk.Button(
-            action_frame, text="▶ BẮT ĐẦU CÀO DỮ LIỆU",
+            action_frame, text="▶ BAT DAU CAO DU LIEU",
             style="Primary.TButton", command=self.start_scraping
         )
         self.btn_start.pack(side="left", ipadx=12, ipady=4, padx=(0, 10))
 
         self.btn_stop = ttk.Button(
-            action_frame, text="⏹ DỪNG LẠI",
+            action_frame, text="⏹ DUNG LAI",
             style="Danger.TButton", command=self.stop_scraping, state="disabled"
         )
         self.btn_stop.pack(side="left", ipadx=8, ipady=4, padx=(0, 10))
 
         self.btn_open_folder = ttk.Button(
-            action_frame, text="📂 MỞ THƯ MỤC LƯU",
+            action_frame, text="📂 MO THU MUC LUU",
             command=self.open_output_folder
         )
         self.btn_open_folder.pack(side="left", ipadx=8, ipady=4)
 
         # Nhan trang thai tom tat
-        self.status_lbl = ttk.Label(action_frame, text="Sẵn sàng thực hiện.", font=("Segoe UI", 9, "bold"), foreground="#0369a1")
+        self.status_lbl = ttk.Label(action_frame, text="San sang thuc hien.", font=("Segoe UI", 9, "bold"), foreground="#0369a1")
         self.status_lbl.pack(side="right", padx=10)
 
         # Thanh tien trinh
@@ -818,7 +818,7 @@ class ScraperGUI:
         self.progress_bar.pack(fill="x")
 
         # --- 4. NHAT KY HOAT DONG (LOG CONSOLE) ---
-        log_frame = ttk.LabelFrame(self.root, text=" 📜 Nhật ký hoạt động & Trạng thái chi tiết ", padding=8)
+        log_frame = ttk.LabelFrame(self.root, text=" 📜 Nhat ky hoat dong & Trang thai chi tiet ", padding=8)
         log_frame.pack(fill="both", expand=True, padx=15, pady=(4, 15))
 
         self.log_text = ScrolledText(
@@ -828,7 +828,7 @@ class ScraperGUI:
         self.log_text.pack(fill="both", expand=True)
 
         # Ghi log chao mung ban dau
-        self.log(f"[{datetime.now().strftime('%H:%M:%S')}] Công cụ đã sẵn sàng. Nhập thông tin và bấm 'BẮT ĐẦU CÀO DỮ LIỆU'...")
+        self.log(f"[{datetime.now().strftime('%H:%M:%S')}] Cong cu da san sang. Nhap thong tin va bam 'BAT DAU CAO DU LIEU'...")
 
     # ==========================================================================
     # CAC SU KIEN TUONG TAC GIAO DIEN
@@ -839,15 +839,15 @@ class ScraperGUI:
         src = self.source_var.get()
         if src == "google_play":
             self.lbl_target.config(text="Package Name / Link:")
-            self.lbl_hint.config(text="Gợi ý: Nhập Package Name (ví dụ: com.shopee.vn, com.spotify.music) hoặc dán link Google Play.")
+            self.lbl_hint.config(text="Goi y: Nhap Package Name (vi du: com.shopee.vn, com.spotify.music) hoac dan link Google Play.")
             self.star_combobox.config(state="readonly")
         elif src == "app_store":
             self.lbl_target.config(text="App ID / Link:")
-            self.lbl_hint.config(text="Gợi ý: Dán thẳng link App Store (vd: https://apps.apple.com/vn/app/.../id959841449) hoặc nhập ID (vd: 959841449 cho Shopee).")
+            self.lbl_hint.config(text="Goi y: Dan thang link App Store (vd: https://apps.apple.com/vn/app/.../id959841449) hoac nhap ID (vd: 959841449 cho Shopee).")
             self.star_combobox.config(state="readonly")
         else:
-            self.lbl_target.config(text="Đường dẫn Web (URL):")
-            self.lbl_hint.config(text="Gợi ý: Dán URL bài viết hoặc chuyên mục (ví dụ: https://vnexpress.net/thoi-su).")
+            self.lbl_target.config(text="Duong dan Web (URL):")
+            self.lbl_hint.config(text="Goi y: Dan URL bai viet hoac chuyen muc (vi du: https://vnexpress.net/thoi-su).")
             self.star_combobox.config(state="disabled")
 
     def fill_example(self):
@@ -859,7 +859,7 @@ class ScraperGUI:
             self.count_combobox.set("1000")
         elif src == "app_store":
             self.target_entry.delete(0, tk.END)
-            self.target_entry.insert(0, "https://apps.apple.com/vn/app/10-10-shopee-thương-hiệu/id959841449")
+            self.target_entry.insert(0, "https://apps.apple.com/vn/app/10-10-shopee-thuong-hieu/id959841449")
             self.count_combobox.set("1000")
         else:
             self.target_entry.delete(0, tk.END)
@@ -881,9 +881,9 @@ class ScraperGUI:
             try:
                 os.startfile(target_dir)
             except Exception as e:
-                messagebox.showerror("Lỗi", f"Không thể mở thư mục: {e}")
+                messagebox.showerror("Loi", f"Khong the mo thu muc: {e}")
         else:
-            messagebox.showwarning("Cảnh báo", "Thư mục chưa tồn tại trên máy tính!")
+            messagebox.showwarning("Canh bao", "Thu muc chua ton tai tren may tinh!")
 
     def log(self, message: str):
         """Them dong chu vao man hinh console."""
@@ -907,7 +907,7 @@ class ScraperGUI:
                 if total > 0:
                     percent = min(100.0, (current / total) * 100)
                     self.progress_bar['value'] = percent
-                    self.status_lbl.config(text=f"Đang cào: {current:,}/{total:,} ({percent:.1f}%)")
+                    self.status_lbl.config(text=f"Dang cao: {current:,}/{total:,} ({percent:.1f}%)")
             except queue.Empty:
                 break
 
@@ -921,7 +921,7 @@ class ScraperGUI:
         """Khoi dong luong cao du lieu."""
         raw_target = self.target_entry.get().strip()
         if not raw_target:
-            messagebox.showwarning("Thiếu thông tin", "Vui lòng nhập Link, Package Name hoặc App ID!")
+            messagebox.showwarning("Thieu thong tin", "Vui long nhap Link, Package Name hoac App ID!")
             return
 
         # Kiem tra so luong
@@ -930,7 +930,7 @@ class ScraperGUI:
             if target_count <= 0:
                 raise ValueError
         except ValueError:
-            messagebox.showwarning("Lỗi số lượng", "Số lượng bản ghi phải là một số nguyên dương (ví dụ: 1000)!")
+            messagebox.showwarning("Loi so luong", "So luong ban ghi phai la mot so nguyen duong (vi du: 1000)!")
             return
 
         save_dir = self.save_dir_entry.get().strip() or os.getcwd()
@@ -947,7 +947,7 @@ class ScraperGUI:
         # Lay thong so loc sao
         star_str = self.star_combobox.get().strip()
         filter_star = 0
-        if "Tất cả" in star_str:
+        if "Tat ca" in star_str:
             filter_star = 0  # 0 nghia la cao tat ca cac muc sao tu 1 den 5 sao
         else:
             match_star = re.search(r'(\d+)\s*sao', star_str)
@@ -956,7 +956,7 @@ class ScraperGUI:
 
         # Lay kieu sap xep
         sort_choice = self.sort_combobox.get()
-        sort_type = "most_relevant" if "Liên quan" in sort_choice else "newest"
+        sort_type = "most_relevant" if "Lien quan" in sort_choice else "newest"
 
         # Lay thong so quoc gia
         country_code = self.country_combobox.get().split()[0].strip()
@@ -966,7 +966,7 @@ class ScraperGUI:
         self.btn_start.config(state="disabled")
         self.btn_stop.config(state="normal")
         self.progress_bar['value'] = 0
-        self.status_lbl.config(text="Đang kết nối & cào dữ liệu...", foreground=self.COLOR_PRIMARY)
+        self.status_lbl.config(text="Dang ket noi & cao du lieu...", foreground=self.COLOR_PRIMARY)
 
         # Chay trong luong rieng de tranh lam do ung dung Tkinter
         self.scraping_thread = threading.Thread(
@@ -987,9 +987,9 @@ class ScraperGUI:
 
     def stop_scraping(self):
         """Gui tin hieu dung cao du lieu."""
-        if messagebox.askyesno("Xác nhận", "Bạn có chắc muốn dừng quá trình cào? Dữ liệu đã cào được sẽ vẫn được lưu lại."):
+        if messagebox.askyesno("Xac nhan", "Ban co chac muon dung qua trinh cao? Du lieu da cao duoc se van duoc luu lai."):
             self.stop_event.set()
-            self.log_queue.put("[Yêu cầu dừng] Đang lưu lại các dữ liệu đã thu thập được...")
+            self.log_queue.put("[Yeu cau dung] Dang luu lai cac du lieu da thu thap duoc...")
             self.btn_stop.config(state="disabled")
 
     def _worker_scrape(
@@ -1052,8 +1052,8 @@ class ScraperGUI:
 
             # 2. Xu ly & Lam sach du lieu
             if df.empty:
-                self.log_queue.put("[Cảnh báo] Không tìm thấy dữ liệu nào phù hợp với yêu cầu.")
-                self.root.after(0, lambda: messagebox.showwarning("Kết quả rỗng", "Không tìm thấy dữ liệu nào. Vui lòng kiểm tra lại Link/ID hoặc kết nối mạng!"))
+                self.log_queue.put("[Canh bao] Khong tim thay du lieu nao phu hop voi yeu cau.")
+                self.root.after(0, lambda: messagebox.showwarning("Ket qua rong", "Khong tim thay du lieu nao. Vui long kiem tra lai Link/ID hoac ket noi mang!"))
             else:
                 df = clean_and_process_dataframe(df, self.log_queue)
                 
@@ -1061,17 +1061,17 @@ class ScraperGUI:
                 saved_files = export_dataframe(df, save_dir, base_name, export_format, self.log_queue)
 
                 elapsed = round(time.time() - start_time, 2)
-                success_msg = f"ĐÃ HOÀN THÀNH!\n- Thu thập: {len(df):,} bản ghi\n- Thời gian: {elapsed} giây\n- Thư mục lưu: {save_dir}"
+                success_msg = f"DA HOAN THANH!\n- Thu thap: {len(df):,} ban ghi\n- Thoi gian: {elapsed} giay\n- Thu muc luu: {save_dir}"
                 self.log_queue.put("=" * 60)
-                self.log_queue.put(f"[Thành công] {success_msg.replace(chr(10), ' | ')}")
+                self.log_queue.put(f"[Thanh cong] {success_msg.replace(chr(10), ' | ')}")
                 self.log_queue.put("=" * 60)
 
                 # Hien thi popup thong bao thanh cong
-                self.root.after(0, lambda: messagebox.showinfo("Cào dữ liệu thành công!", success_msg))
+                self.root.after(0, lambda: messagebox.showinfo("Cao du lieu thanh cong!", success_msg))
 
         except Exception as e:
-            self.log_queue.put(f"[Lỗi ngoại lệ] {str(e)}")
-            self.root.after(0, lambda err=str(e): messagebox.showerror("Lỗi thực thi", f"Đã xảy ra lỗi:\n{err}"))
+            self.log_queue.put(f"[Loi ngoai le] {str(e)}")
+            self.root.after(0, lambda err=str(e): messagebox.showerror("Loi thuc thi", f"Da xay ra loi:\n{err}"))
 
         finally:
             # Khoi phuc trang thai nut bam tren giao dien
@@ -1081,7 +1081,7 @@ class ScraperGUI:
         """Khoi phuc trang thai giao dien sau khi luong cao hoan tat."""
         self.btn_start.config(state="normal")
         self.btn_stop.config(state="disabled")
-        self.status_lbl.config(text="Đã hoàn thành công việc.", foreground=self.COLOR_SUCCESS)
+        self.status_lbl.config(text="Da hoan thanh cong viec.", foreground=self.COLOR_SUCCESS)
         self.progress_bar['value'] = 100
 
 

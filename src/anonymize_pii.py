@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
 Module: anonymize_pii.py
-Mục đích: Loại bỏ hoàn toàn thông tin định danh cá nhân (PII) và che giấu dữ liệu nhạy cảm
-Thuộc quy trình: Bước 2 (Ẩn danh PII) - Dự án Phân tích quan điểm ứng dụng di động (Nhóm 12)
-Thực hiện: Lưu Thị Khánh Ly (luuthily34-lab)
+Muc dich: Loai bo hoan toan thong tin dinh danh ca nhan (PII) va che giau du lieu nhay cam
+Thuoc quy trinh: Buoc 2 (An danh PII) - Du an Phan tich quan diem ung dung di dong (Nhom 12)
+Thuc hien: Luu Thi Khanh Ly (luuthily34-lab)
 """
 
 import os
@@ -15,41 +15,41 @@ if sys.platform == 'win32':
     sys.stdout.reconfigure(encoding='utf-8')
 
 def mask_sensitive_patterns(text: str) -> str:
-    """Che giấu số điện thoại và email xuất hiện trong nội dung đánh giá."""
+    """Che giau so dien thoai va email xuat hien trong noi dung danh gia."""
     if not isinstance(text, str):
         return ""
-    # Che số điện thoại di động Việt Nam (đầu số 03, 05, 07, 08, 09 kèm 8 chữ số)
+    # Che so dien thoai di dong Viet Nam (dau so 03, 05, 07, 08, 09 kem 8 chu so)
     text = re.sub(r'(03|05|07|08|09)\d{8}', '[SDT]', text)
-    # Che địa chỉ email
+    # Che dia chi email
     text = re.sub(r'[\w\.-]+@[\w\.-]+\.\w+', '[EMAIL]', text)
     return text
 
 def anonymize_dataset(input_file: str, output_file: str):
-    print(f"[*] Đang đọc tập dữ liệu thô từ: {input_file}")
+    print(f"[*] Dang doc tap du lieu tho tu: {input_file}")
     df = pd.read_csv(input_file)
     initial_rows = len(df)
     initial_cols = list(df.columns)
-    print(f"[+] Tổng số dòng ban đầu: {initial_rows}")
-    print(f"[+] Các cột ban đầu: {initial_cols}")
+    print(f"[+] Tong so dong ban dau: {initial_rows}")
+    print(f"[+] Cac cot ban dau: {initial_cols}")
 
-    # 1. Loại bỏ cột định danh người dùng (user_name) nếu tồn tại
+    # 1. Loai bo cot dinh danh nguoi dung (user_name) neu ton tai
     if "user_name" in df.columns:
         df = df.drop(columns=["user_name"])
-        print("[v] Đã loại bỏ hoàn toàn cột định danh 'user_name'.")
+        print("[v] Da loai bo hoan toan cot dinh danh 'user_name'.")
     else:
-        print("[!] Không tìm thấy cột 'user_name', dữ liệu đã không còn tên người dùng.")
+        print("[!] Khong tim thay cot 'user_name', du lieu da khong con ten nguoi dung.")
 
-    # 2. Quét và ẩn danh số điện thoại, email trong cột nội dung
+    # 2. Quet va an danh so dien thoai, email trong cot noi dung
     if "content" in df.columns:
         df["content"] = df["content"].apply(mask_sensitive_patterns)
-        print("[v] Đã che giấu toàn bộ Số điện thoại và Email trong nội dung đánh giá.")
+        print("[v] Da che giau toan bo So dien thoai va Email trong noi dung danh gia.")
 
-    # 3. Lưu dữ liệu đã ẩn danh
+    # 3. Luu du lieu da an danh
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
     df.to_csv(output_file, index=False)
-    print(f"[v] Đã xuất dữ liệu an toàn ra: {output_file}")
-    print(f"[v] Các cột hiện tại sau xử lý PII: {list(df.columns)}")
-    print("[*] Hoàn thành Bước 2: Ẩn danh hóa thông tin cá nhân (PII) thành công 100%!")
+    print(f"[v] Da xuat du lieu an toan ra: {output_file}")
+    print(f"[v] Cac cot hien tai sau xu ly PII: {list(df.columns)}")
+    print("[*] Hoan thanh Buoc 2: An danh hoa thong tin ca nhan (PII) thanh cong 100%!")
 
 if __name__ == "__main__":
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 """
 ================================================================================
-CÔNG CỤ CÀO DỮ LIỆU ĐA NĂNG (WEB & APP SCRAPER) - GIAO DIỆN TKINTER
+CONG CU CAO DU LIEU DA NANG (WEB & APP SCRAPER) - GIAO DIEN TKINTER
 ================================================================================
-Mô tả:
-  Ứng dụng cào dữ liệu đồ họa (GUI) hoàn chỉnh, trực quan, hỗ trợ:
-  1. Google Play Store Reviews (hỗ trợ cào hàng nghìn bản ghi, phân trang)
+Mo ta:
+  Ung dung cao du lieu do hoa (GUI) hoan chinh, truc quan, ho tro:
+  1. Google Play Store Reviews (ho tro cao hang nghin ban ghi, phan trang)
   2. Apple App Store Reviews (qua iTunes RSS/Customer Reviews API)
-  3. Trang web tin tức / bài viết cơ bản (Requests + BeautifulSoup)
+  3. Trang web tin tuc / bai viet co ban (Requests + BeautifulSoup)
 
-Tính năng chính:
-  - Chọn thư mục lưu linh hoạt bằng hộp thoại Browse.
-  - Tự động tách Package Name / App ID từ đường dẫn URL.
-  - Tùy chọn số lượng bản ghi (1000, 3000, 5000+ bản ghi), quốc gia, sắp xếp, lọc sao.
-  - Tự động làm sạch dữ liệu (loại bỏ rỗng, lọc trùng, format ngày giờ, phân loại cảm xúc).
-  - Xuất ra file Excel (.xlsx) hoặc CSV (UTF-8-sig chống lỗi font tiếng Việt).
-  - Thanh tiến trình (Progress Bar), Nhật ký (Log Console) và nút mở thư mục trực tiếp.
-  - Chạy trên đa luồng (Multi-threading) không gây đơ/treo giao diện.
+Tinh nang chinh:
+  - Chon thu muc luu linh hoat bang hop thoai Browse.
+  - Tu dong tach Package Name / App ID tu duong dan URL.
+  - Tuy chon so luong ban ghi (1000, 3000, 5000+ ban ghi), quoc gia, sap xep, loc sao.
+  - Tu dong lam sach du lieu (loai bo rong, loc trung, format ngay gio, phan loai cam xuc).
+  - Xuat ra file Excel (.xlsx) hoac CSV (UTF-8-sig chong loi font tieng Viet).
+  - Thanh tien trinh (Progress Bar), Nhat ky (Log Console) va nut mo thu muc truc tiep.
+  - Chay tren da luong (Multi-threading) khong gay do/treo giao dien.
 ================================================================================
 """
 
@@ -29,12 +29,12 @@ import threading
 from datetime import datetime
 import urllib.parse
 
-# Giao diện Tkinter
+# Giao dien Tkinter
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 from tkinter.scrolledtext import ScrolledText
 
-# Xử lý dữ liệu & Web Scraping
+# Xu ly du lieu & Web Scraping
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
@@ -48,25 +48,25 @@ except ImportError:
 
 
 # ==============================================================================
-# 1. CÁC HÀM TIỆN ÍCH TRÍCH XUẤT & XỬ LÝ DỮ LIỆU
+# 1. CAC HAM TIEN ICH TRICH XUAT & XU LY DU LIEU
 # ==============================================================================
 
 def extract_google_play_id(input_str: str) -> str:
     """
-    Trích xuất App Package Name từ chuỗi nhập vào.
-    Hỗ trợ cả dạng ID trực tiếp (vd: com.shopee.vn) hoặc Link URL đầy đủ:
+    Trich xuat App Package Name tu chuoi nhap vao.
+    Ho tro ca dang ID truc tiep (vd: com.shopee.vn) hoac Link URL day du:
     https://play.google.com/store/apps/details?id=com.shopee.vn&hl=vi
     """
     input_str = input_str.strip()
     if not input_str:
         return ""
-    # Nếu là URL
+    # Neu la URL
     if "play.google.com" in input_str:
         parsed = urllib.parse.urlparse(input_str)
         query = urllib.parse.parse_qs(parsed.query)
         if "id" in query and query["id"]:
             return query["id"][0]
-    # Nếu là chuỗi package name thông thường (vd: com.zing.zalo)
+    # Neu la chuoi package name thong thuong (vd: com.zing.zalo)
     match = re.search(r'[a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+)+', input_str)
     if match:
         return match.group(0)
@@ -75,27 +75,27 @@ def extract_google_play_id(input_str: str) -> str:
 
 def extract_app_store_id(input_str: str) -> tuple:
     """
-    Trích xuất App ID và mã quốc gia (nếu có) từ chuỗi nhập vào của Apple App Store.
-    Hỗ trợ dạng số (vd: 959841449) hoặc Link URL:
-    https://apps.apple.com/vn/app/10-10-shopee-thương-hiệu/id959841449?l=vi
-    Trả về: (app_id, country_code)
+    Trich xuat App ID va ma quoc gia (neu co) tu chuoi nhap vao cua Apple App Store.
+    Ho tro dang so (vd: 959841449) hoac Link URL:
+    https://apps.apple.com/vn/app/10-10-shopee-thuong-hieu/id959841449?l=vi
+    Tra ve: (app_id, country_code)
     """
     input_str = input_str.strip()
     if not input_str:
         return "", ""
 
     country = ""
-    # Trích xuất mã quốc gia trong URL (vd: /vn/app/ hoặc /us/app/)
+    # Trich xuat ma quoc gia trong URL (vd: /vn/app/ hoac /us/app/)
     match_country = re.search(r'apple\.com/([a-zA-Z]{2})/', input_str)
     if match_country:
         country = match_country.group(1).lower()
 
-    # Nếu dán link có chứa id123456789
+    # Neu dan link co chua id123456789
     match_id = re.search(r'id(\d+)', input_str)
     if match_id:
         return match_id.group(1), country
 
-    # Nếu người dùng nhập trực tiếp dãy số ID (vd: 959841449)
+    # Neu nguoi dung nhap truc tiep day so ID (vd: 959841449)
     digits = re.findall(r'\d+', input_str)
     if digits:
         return digits[0], country
@@ -104,17 +104,17 @@ def extract_app_store_id(input_str: str) -> tuple:
 
 
 def clean_text(text: str) -> str:
-    """Làm sạch chuỗi văn bản: chuẩn hóa khoảng trắng, loại bỏ ký tự lạ."""
+    """Lam sach chuoi van ban: chuan hoa khoang trang, loai bo ky tu la."""
     if not text or not isinstance(text, str):
         return ""
-    # Thay thế nhiều dấu cách/xuống dòng liên tiếp bằng 1 dấu cách gọn gàng
+    # Thay the nhieu dau cach/xuong dong lien tiep bang 1 dau cach gon gang
     text = re.sub(r'[\r\n\t]+', ' ', text)
     text = re.sub(r'\s{2,}', ' ', text)
     return text.strip()
 
 
 def categorize_sentiment(rating: int) -> str:
-    """Gán nhãn cảm xúc sơ bộ dựa trên số sao rating."""
+    """Gan nhan cam xuc so bo dua tren so sao rating."""
     try:
         r = int(rating)
         if r >= 4:
@@ -128,7 +128,7 @@ def categorize_sentiment(rating: int) -> str:
 
 
 # ==============================================================================
-# 2. CÁC HÀM CÀO DỮ LIỆU (SCRAPING ENGINES)
+# 2. CAC HAM CAO DU LIEU (SCRAPING ENGINES)
 # ==============================================================================
 
 def scrape_google_play_reviews(
@@ -143,19 +143,19 @@ def scrape_google_play_reviews(
     progress_queue: queue.Queue
 ) -> pd.DataFrame:
     """
-    Cào đánh giá từ Google Play Store theo lô (batch) và phân trang tự động.
+    Cao danh gia tu Google Play Store theo lo (batch) va phan trang tu dong.
     """
     if not HAS_GOOGLE_PLAY:
         raise ImportError("Chưa cài đặt thư viện 'google-play-scraper'. Vui lòng chạy: pip install google-play-scraper")
 
     log_queue.put(f"[Google Play] Bắt đầu cào app: '{app_id}' (Mục tiêu: {target_count:,} bản ghi)...")
     
-    # Xác định kiểu sắp xếp
+    # Xac dinh kieu sap xep
     sort_enum = gp_Sort.NEWEST if sort_type == "newest" else gp_Sort.MOST_RELEVANT
 
     all_reviews = []
     continuation_token = None
-    batch_size = 200  # Google Play API hỗ trợ tốt nhất ở khoảng 100-200 mỗi batch
+    batch_size = 200  # Google Play API ho tro tot nhat o khoang 100-200 moi batch
     consecutive_empty = 0
 
     while len(all_reviews) < target_count and not stop_event.is_set():
@@ -184,7 +184,7 @@ def scrape_google_play_reviews(
         else:
             consecutive_empty = 0
 
-        # Lưu dữ liệu từ batch
+        # Luu du lieu tu batch
         for r in results:
             content = clean_text(r.get('content', ''))
             score = r.get('score', 0)
@@ -209,12 +209,12 @@ def scrape_google_play_reviews(
         progress_queue.put((current_count, target_count))
         log_queue.put(f"[Google Play] Đã thu thập: {current_count:,}/{target_count:,} bản ghi...")
 
-        # Nếu không còn token tiếp theo thì đã hết toàn bộ review
+        # Neu khong con token tiep theo thi da het toan bo review
         if not continuation_token:
             log_queue.put("[Google Play] Đã tải hết toàn bộ đánh giá có sẵn trên Store.")
             break
 
-        # Giãn cách nhẹ tránh spam rate limit
+        # Gian cach nhe tranh spam rate limit
         time.sleep(0.3)
 
     if stop_event.is_set():
@@ -234,12 +234,12 @@ def scrape_app_store_reviews(
     progress_queue: queue.Queue
 ) -> pd.DataFrame:
     """
-    Cào đánh giá từ Apple App Store sử dụng Catalog Web API hiện đại (hỗ trợ phân trang không giới hạn)
-    kết hợp tra cứu thông tin ứng dụng qua iTunes Lookup API.
+    Cao danh gia tu Apple App Store su dung Catalog Web API hien dai (ho tro phan trang khong gioi han)
+    ket hop tra cuu thong tin ung dung qua iTunes Lookup API.
     """
     log_queue.put(f"[Apple App Store] Đang kiểm tra App ID: '{app_id}' tại khu vực '{country.upper()}'...")
 
-    # 1. Tra cứu tên và nhà phát triển ứng dụng trên Store
+    # 1. Tra cuu ten va nha phat trien ung dung tren Store
     app_name = f"App ID {app_id}"
     seller_name = ""
     try:
@@ -253,7 +253,7 @@ def scrape_app_store_reviews(
                 seller_name = res.get('sellerName', '')
                 log_queue.put(f"[Apple App Store] ✅ Đã tìm thấy: '{app_name}' (Phát triển: {seller_name})")
             else:
-                # Thử tìm ở khu vực 'us' xem có phải do người dùng chọn nhầm khu vực
+                # Thu tim o khu vuc 'us' xem co phai do nguoi dung chon nham khu vuc
                 r_us = requests.get(f"https://itunes.apple.com/lookup?id={app_id}&country=us", headers={'User-Agent': 'Mozilla/5.0'}, timeout=8)
                 if r_us.status_code == 200 and r_us.json().get('resultCount', 0) > 0:
                     res_us = r_us.json()['results'][0]
@@ -284,7 +284,7 @@ def scrape_app_store_reviews(
     consecutive_empty = 0
     retry_429 = 0
 
-    # 2. Thu thập dữ liệu qua Catalog API (Modern Web API của Apple App Store)
+    # 2. Thu thap du lieu qua Catalog API (Modern Web API cua Apple App Store)
     while len(all_reviews) < target_count and not stop_event.is_set():
         url = f"https://apps.apple.com/api/apps/v1/catalog/{country}/apps/{app_id}/reviews"
         params = {
@@ -341,7 +341,7 @@ def scrape_app_store_reviews(
                 full_content = f"{title}. {body}".strip(" .") if title else body
                 date_str = str(attr.get('date', '')).replace('T', ' ').replace('Z', '')
 
-                # Phản hồi từ nhà phát triển
+                # Phan hoi tu nha phat trien
                 dev_resp = attr.get('developerResponse', {})
                 reply_body = clean_text(dev_resp.get('body', '')) if dev_resp else ''
                 reply_date = str(dev_resp.get('modified', '')).replace('T', ' ').replace('Z', '') if dev_resp else ''
@@ -368,7 +368,7 @@ def scrape_app_store_reviews(
             progress_queue.put((current_count, target_count))
             log_queue.put(f"[Apple App Store] Đã thu thập: {current_count:,}/{target_count:,} bản ghi...")
 
-            # Nếu không còn link next
+            # Neu khong con link next
             if not data.get('next'):
                 log_queue.put("[Apple App Store] Đã tải hết toàn bộ đánh giá có sẵn trên Store.")
                 break
@@ -379,7 +379,7 @@ def scrape_app_store_reviews(
             log_queue.put(f"[Lỗi Apple App Store] {str(e)}")
             break
 
-    # 3. Phương thức dự phòng qua XML RSS nếu Catalog API chưa lấy được bản ghi nào
+    # 3. Phuong thuc du phong qua XML RSS neu Catalog API chua lay duoc ban ghi nao
     if not all_reviews and not stop_event.is_set():
         log_queue.put("[Apple App Store] Đang thử phương thức kết nối dự phòng (RSS Feed)...")
         try:
@@ -433,7 +433,7 @@ def scrape_generic_website(
     progress_queue: queue.Queue
 ) -> pd.DataFrame:
     """
-    Cào bài viết, tiêu đề, đoạn văn và liên kết từ một trang web thông thường.
+    Cao bai viet, tieu de, doan van va lien ket tu mot trang web thong thuong.
     """
     log_queue.put(f"[Web Scraper] Bắt đầu cào trang: '{url}'...")
     headers = {
@@ -449,7 +449,7 @@ def scrape_generic_website(
         return pd.DataFrame()
 
     items = []
-    # 1. Tìm các tiêu đề h1, h2, h3 và thẻ bài viết
+    # 1. Tim cac tieu de h1, h2, h3 va the bai viet
     headings = soup.find_all(['h1', 'h2', 'h3', 'p', 'article', 'li'])
     log_queue.put(f"[Web Scraper] Đã phân tích DOM, tìm thấy {len(headings):,} thẻ nội dung.")
 
@@ -458,7 +458,7 @@ def scrape_generic_website(
         if stop_event.is_set():
             break
         text = clean_text(tag.get_text())
-        # Bỏ qua chuỗi quá ngắn (< 25 ký tự) hoặc trùng lặp
+        # Bo qua chuoi qua ngan (< 25 ky tu) hoac trung lap
         if len(text) < 25 or text in seen_texts:
             continue
         seen_texts.add(text)
@@ -495,31 +495,31 @@ def scrape_generic_website(
 
 
 # ==============================================================================
-# 3. HÀM LÀM SẠCH VÀ LƯU DỮ LIỆU
+# 3. HAM LAM SACH VA LUU DU LIEU
 # ==============================================================================
 
 def clean_and_process_dataframe(df: pd.DataFrame, log_queue: queue.Queue) -> pd.DataFrame:
     """
-    Làm sạch dữ liệu thô:
-    - Loại bỏ hàng rỗng, null
-    - Lọc trùng theo review_id hoặc nội dung
-    - Chuẩn hóa kiểu dữ liệu rating và ngày tháng
+    Lam sach du lieu tho:
+    - Loai bo hang rong, null
+    - Loc trung theo review_id hoac noi dung
+    - Chuan hoa kieu du lieu rating va ngay thang
     """
     if df.empty:
         return df
 
     initial_len = len(df)
 
-    # 1. Loại bỏ các dòng có nội dung rỗng
+    # 1. Loai bo cac dong co noi dung rong
     df['content'] = df['content'].astype(str).str.strip()
     df = df[df['content'].str.len() > 0].copy()
 
-    # 2. Xóa các bản ghi trùng lặp (nếu có review_id hoặc trùng 100% nội dung)
+    # 2. Xoa cac ban ghi trung lap (neu co review_id hoac trung 100% noi dung)
     if 'review_id' in df.columns:
         df.drop_duplicates(subset=['review_id'], keep='first', inplace=True)
     df.drop_duplicates(subset=['content'], keep='first', inplace=True)
 
-    # 3. Chuẩn hóa cột rating
+    # 3. Chuan hoa cot rating
     if 'rating' in df.columns:
         df['rating'] = pd.to_numeric(df['rating'], errors='coerce').fillna(0).astype(int)
 
@@ -530,7 +530,7 @@ def clean_and_process_dataframe(df: pd.DataFrame, log_queue: queue.Queue) -> pd.
     else:
         log_queue.put(f"[Làm sạch] Dữ liệu hoàn toàn sạch sẽ ({cleaned_len:,} bản ghi hợp lệ).")
 
-    # Thống kê phân bố số sao trực quan
+    # Thong ke phan bo so sao truc quan
     if 'rating' in df.columns and cleaned_len > 0:
         counts = df['rating'].value_counts().to_dict()
         log_queue.put("[Thống kê số sao thu thập]:")
@@ -550,14 +550,14 @@ def export_dataframe(
     log_queue: queue.Queue
 ) -> list:
     """
-    Xuất DataFrame ra file .csv (UTF-8-sig chống lỗi font Excel) hoặc .xlsx
+    Xuat DataFrame ra file .csv (UTF-8-sig chong loi font Excel) hoac .xlsx
     """
     saved_files = []
     os.makedirs(save_dir, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     clean_base = re.sub(r'[^a-zA-Z0-9_\-\.]', '_', base_name)[:60]
 
-    # Xuất Excel (.xlsx)
+    # Xuat Excel (.xlsx)
     if export_format in ["xlsx", "both"]:
         file_path_xlsx = os.path.join(save_dir, f"{clean_base}_{timestamp}.xlsx")
         try:
@@ -569,7 +569,7 @@ def export_dataframe(
             log_queue.put(f"[Lỗi xuất Excel] {str(e)}. Tự động chuyển hướng sang CSV...")
             export_format = "csv"
 
-    # Xuất CSV (UTF-8 có BOM chống lỗi tiếng Việt trên Microsoft Excel)
+    # Xuat CSV (UTF-8 co BOM chong loi tieng Viet tren Microsoft Excel)
     if export_format in ["csv", "both"]:
         file_path_csv = os.path.join(save_dir, f"{clean_base}_{timestamp}.csv")
         try:
@@ -583,48 +583,48 @@ def export_dataframe(
 
 
 # ==============================================================================
-# 4. GIAO DIỆN ĐỒ HỌA NGƯỜI DÙNG (TKINTER GUI)
+# 4. GIAO DIEN DO HOA NGUOI DUNG (TKINTER GUI)
 # ==============================================================================
 
 class ScraperGUI:
     def __init__(self, root: tk.Tk):
         self.root = root
-        self.root.title("Công Cụ Cào Dữ Liệu Đa Năng (Google Play, App Store & Web) - GUI")
+        self.root.title("Cong Cu Cao Du Lieu Da Nang (Google Play, App Store & Web) - GUI")
         self.root.geometry("960x780")
         self.root.minsize(860, 680)
 
-        # Hàng đợi giao tiếp giữa luồng cào dữ liệu và giao diện GUI
+        # Hang doi giao tiep giua luong cao du lieu va giao dien GUI
         self.log_queue = queue.Queue()
         self.progress_queue = queue.Queue()
         self.stop_event = threading.Event()
         self.scraping_thread = None
         self.last_saved_dir = os.path.abspath(os.getcwd())
 
-        # Thiết lập phong cách giao diện (Theme)
+        # Thiet lap phong cach giao dien (Theme)
         self.setup_styles()
 
-        # Xây dựng các thành phần giao diện
+        # Xay dung cac thanh phan giao dien
         self.create_widgets()
 
-        # Bắt đầu vòng lặp kiểm tra hàng đợi nhật ký
+        # Bat dau vong lap kiem tra hang doi nhat ky
         self.root.after(100, self.process_queues)
 
     def setup_styles(self):
-        """Cấu hình màu sắc, phông chữ và kiểu dáng ttk trực quan, hiện đại."""
+        """Cau hinh mau sac, phong chu va kieu dang ttk truc quan, hien dai."""
         self.style = ttk.Style()
         try:
             self.style.theme_use('clam')
         except Exception:
             pass
 
-        # Màu sắc chủ đạo
-        self.COLOR_BG = "#f8fafc"          # Nền xám nhạt hiện đại
-        self.COLOR_CARD = "#ffffff"        # Nền card trắng
-        self.COLOR_PRIMARY = "#2563eb"     # Xanh dương đậm
-        self.COLOR_SUCCESS = "#16a34a"     # Xanh lá cây thành công
-        self.COLOR_DANGER = "#dc2626"      # Đỏ hủy
-        self.COLOR_TEXT = "#0f172a"        # Chữ đen xám đậm
-        self.COLOR_MUTED = "#64748b"       # Chữ phụ màu xám
+        # Mau sac chu dao
+        self.COLOR_BG = "#f8fafc"          # Nen xam nhat hien dai
+        self.COLOR_CARD = "#ffffff"        # Nen card trang
+        self.COLOR_PRIMARY = "#2563eb"     # Xanh duong dam
+        self.COLOR_SUCCESS = "#16a34a"     # Xanh la cay thanh cong
+        self.COLOR_DANGER = "#dc2626"      # Do huy
+        self.COLOR_TEXT = "#0f172a"        # Chu den xam dam
+        self.COLOR_MUTED = "#64748b"       # Chu phu mau xam
 
         self.root.configure(bg=self.COLOR_BG)
 
@@ -635,7 +635,7 @@ class ScraperGUI:
         self.style.configure("SubHeader.TLabel", font=("Segoe UI", 9), foreground=self.COLOR_MUTED, background=self.COLOR_BG)
         self.style.configure("Section.TLabel", font=("Segoe UI", 10, "bold"), foreground="#1e293b", background=self.COLOR_CARD)
         
-        # Style cho các nút bấm
+        # Style cho cac nut bam
         self.style.configure("Primary.TButton", font=("Segoe UI", 10, "bold"), background=self.COLOR_PRIMARY, foreground="#ffffff")
         self.style.map("Primary.TButton", background=[('active', '#1d4ed8'), ('disabled', '#94a3b8')])
 
@@ -646,8 +646,8 @@ class ScraperGUI:
         self.style.map("Success.TButton", background=[('active', '#15803d')])
 
     def create_widgets(self):
-        """Khởi tạo toàn bộ các phần tử trên cửa sổ ứng dụng."""
-        # --- 1. TIÊU ĐỀ ỨNG DỤNG ---
+        """Khoi tao toan bo cac phan tu tren cua so ung dung."""
+        # --- 1. TIEU DE UNG DUNG ---
         header_frame = ttk.Frame(self.root, padding="15 10 15 5")
         header_frame.pack(fill="x")
 
@@ -665,11 +665,11 @@ class ScraperGUI:
         )
         sub_lbl.pack(anchor="w", pady=(2, 0))
 
-        # --- 2. CARD CẤU HÌNH ĐẦU VÀO ---
+        # --- 2. CARD CAU HINH DAU VAO ---
         input_card = ttk.Frame(self.root, padding=15, style="Card.TFrame")
         input_card.pack(fill="x", padx=15, pady=8)
 
-        # Dòng 1: Chọn Nguồn dữ liệu
+        # Dong 1: Chon Nguon du lieu
         row1 = ttk.Frame(input_card, style="Card.TFrame")
         row1.pack(fill="x", pady=4)
         
@@ -694,7 +694,7 @@ class ScraperGUI:
         )
         rb3.pack(side="left", padx=10)
 
-        # Dòng 2: Nhập Link hoặc App ID
+        # Dong 2: Nhap Link hoac App ID
         row2 = ttk.Frame(input_card, style="Card.TFrame")
         row2.pack(fill="x", pady=6)
 
@@ -705,7 +705,7 @@ class ScraperGUI:
         self.target_entry.pack(side="left", fill="x", expand=True, padx=(0, 8))
         self.target_entry.insert(0, "com.shopee.vn")
 
-        # Nút ví dụ nhanh
+        # Nut vi du nhanh
         self.btn_example = ttk.Button(row2, text="Mẫu thử", command=self.fill_example, width=9)
         self.btn_example.pack(side="right")
 
@@ -716,11 +716,11 @@ class ScraperGUI:
         )
         self.lbl_hint.pack(anchor="w", padx=(145, 0), pady=(0, 6))
 
-        # Dòng 3: Số lượng bản ghi, Quốc gia, Sắp xếp, Lọc sao
+        # Dong 3: So luong ban ghi, Quoc gia, Sap xep, Loc sao
         row3 = ttk.Frame(input_card, style="Card.TFrame")
         row3.pack(fill="x", pady=6)
 
-        # Số lượng
+        # So luong
         ttk.Label(row3, text="Số lượng:", style="Section.TLabel", width=10).pack(side="left")
         self.count_combobox = ttk.Combobox(
             row3, values=["500", "1000", "2000", "3000", "5000", "10000", "20000"],
@@ -729,7 +729,7 @@ class ScraperGUI:
         self.count_combobox.set("1000")
         self.count_combobox.pack(side="left", padx=(0, 15))
 
-        # Quốc gia
+        # Quoc gia
         ttk.Label(row3, text="Quốc gia:", style="Section.TLabel").pack(side="left")
         self.country_combobox = ttk.Combobox(
             row3, values=["vn (Việt Nam)", "us (Hoa Kỳ)", "kr (Hàn Quốc)", "jp (Nhật Bản)", "sg (Singapore)"],
@@ -738,7 +738,7 @@ class ScraperGUI:
         self.country_combobox.set("vn (Việt Nam)")
         self.country_combobox.pack(side="left", padx=(5, 15))
 
-        # Sắp xếp
+        # Sap xep
         ttk.Label(row3, text="Sắp xếp:", style="Section.TLabel").pack(side="left")
         self.sort_combobox = ttk.Combobox(
             row3, values=["Mới nhất (Newest)", "Liên quan nhất (Most Relevant)"],
@@ -747,7 +747,7 @@ class ScraperGUI:
         self.sort_combobox.set("Mới nhất (Newest)")
         self.sort_combobox.pack(side="left", padx=(5, 15))
 
-        # Lọc sao
+        # Loc sao
         ttk.Label(row3, text="Lọc số sao:", style="Section.TLabel").pack(side="left")
         self.star_combobox = ttk.Combobox(
             row3, values=[
@@ -763,7 +763,7 @@ class ScraperGUI:
         self.star_combobox.set("Tất cả (1 - 5 sao)")
         self.star_combobox.pack(side="left", padx=5)
 
-        # Dòng 4: Thư mục lưu kết quả & Định dạng xuất
+        # Dong 4: Thu muc luu ket qua & Dinh dang xuat
         row4 = ttk.Frame(input_card, style="Card.TFrame")
         row4.pack(fill="x", pady=6)
 
@@ -775,7 +775,7 @@ class ScraperGUI:
         btn_browse = ttk.Button(row4, text="📁 Chọn thư mục...", command=self.browse_folder)
         btn_browse.pack(side="left", padx=(0, 15))
 
-        # Định dạng file
+        # Dinh dang file
         ttk.Label(row4, text="Định dạng:", style="Section.TLabel").pack(side="left")
         self.format_combobox = ttk.Combobox(
             row4, values=["Excel (.xlsx)", "CSV (UTF-8-sig)", "Cả hai (.xlsx & .csv)"],
@@ -784,7 +784,7 @@ class ScraperGUI:
         self.format_combobox.set("Excel (.xlsx)")
         self.format_combobox.pack(side="left", padx=5)
 
-        # --- 3. KHU VỰC ĐIỀU KHIỂN & TIẾN TRÌNH ---
+        # --- 3. KHU VUC DIEU KHIEN & TIEN TRINH ---
         action_frame = ttk.Frame(self.root, padding="15 5 15 5")
         action_frame.pack(fill="x")
 
@@ -806,18 +806,18 @@ class ScraperGUI:
         )
         self.btn_open_folder.pack(side="left", ipadx=8, ipady=4)
 
-        # Nhãn trạng thái tóm tắt
+        # Nhan trang thai tom tat
         self.status_lbl = ttk.Label(action_frame, text="Sẵn sàng thực hiện.", font=("Segoe UI", 9, "bold"), foreground="#0369a1")
         self.status_lbl.pack(side="right", padx=10)
 
-        # Thanh tiến trình
+        # Thanh tien trinh
         progress_frame = ttk.Frame(self.root, padding="15 4 15 6")
         progress_frame.pack(fill="x")
 
         self.progress_bar = ttk.Progressbar(progress_frame, mode="determinate")
         self.progress_bar.pack(fill="x")
 
-        # --- 4. NHẬT KÝ HOẠT ĐỘNG (LOG CONSOLE) ---
+        # --- 4. NHAT KY HOAT DONG (LOG CONSOLE) ---
         log_frame = ttk.LabelFrame(self.root, text=" 📜 Nhật ký hoạt động & Trạng thái chi tiết ", padding=8)
         log_frame.pack(fill="both", expand=True, padx=15, pady=(4, 15))
 
@@ -827,15 +827,15 @@ class ScraperGUI:
         )
         self.log_text.pack(fill="both", expand=True)
 
-        # Ghi log chào mừng ban đầu
+        # Ghi log chao mung ban dau
         self.log(f"[{datetime.now().strftime('%H:%M:%S')}] Công cụ đã sẵn sàng. Nhập thông tin và bấm 'BẮT ĐẦU CÀO DỮ LIỆU'...")
 
     # ==========================================================================
-    # CÁC SỰ KIỆN TƯƠNG TÁC GIAO DIỆN
+    # CAC SU KIEN TUONG TAC GIAO DIEN
     # ==========================================================================
 
     def on_source_change(self):
-        """Thay đổi nhãn và gợi ý khi người dùng chuyển nguồn dữ liệu."""
+        """Thay doi nhan va goi y khi nguoi dung chuyen nguon du lieu."""
         src = self.source_var.get()
         if src == "google_play":
             self.lbl_target.config(text="Package Name / Link:")
@@ -851,7 +851,7 @@ class ScraperGUI:
             self.star_combobox.config(state="disabled")
 
     def fill_example(self):
-        """Điền dữ liệu mẫu nhanh để người dùng thử nghiệm ngay."""
+        """Dien du lieu mau nhanh de nguoi dung thu nghiem ngay."""
         src = self.source_var.get()
         if src == "google_play":
             self.target_entry.delete(0, tk.END)
@@ -867,7 +867,7 @@ class ScraperGUI:
             self.count_combobox.set("500")
 
     def browse_folder(self):
-        """Mở hộp thoại chọn thư mục lưu trữ."""
+        """Mo hop thoai chon thu muc luu tru."""
         chosen = filedialog.askdirectory(initialdir=self.save_dir_entry.get().strip() or os.getcwd())
         if chosen:
             self.save_dir_entry.delete(0, tk.END)
@@ -875,7 +875,7 @@ class ScraperGUI:
             self.last_saved_dir = chosen
 
     def open_output_folder(self):
-        """Mở thư mục lưu trữ trên Windows Explorer."""
+        """Mo thu muc luu tru tren Windows Explorer."""
         target_dir = self.save_dir_entry.get().strip() or os.getcwd()
         if os.path.exists(target_dir):
             try:
@@ -886,13 +886,13 @@ class ScraperGUI:
             messagebox.showwarning("Cảnh báo", "Thư mục chưa tồn tại trên máy tính!")
 
     def log(self, message: str):
-        """Thêm dòng chữ vào màn hình console."""
+        """Them dong chu vao man hinh console."""
         self.log_text.insert(tk.END, message + "\n")
         self.log_text.see(tk.END)
 
     def process_queues(self):
-        """Lắng nghe hàng đợi từ luồng cào dữ liệu để cập nhật UI mượt mà."""
-        # 1. Cập nhật Log
+        """Lang nghe hang doi tu luong cao du lieu de cap nhat UI muot ma."""
+        # 1. Cap nhat Log
         while not self.log_queue.empty():
             try:
                 msg = self.log_queue.get_nowait()
@@ -900,7 +900,7 @@ class ScraperGUI:
             except queue.Empty:
                 break
 
-        # 2. Cập nhật Progress Bar
+        # 2. Cap nhat Progress Bar
         while not self.progress_queue.empty():
             try:
                 current, total = self.progress_queue.get_nowait()
@@ -914,17 +914,17 @@ class ScraperGUI:
         self.root.after(100, self.process_queues)
 
     # ==========================================================================
-    # QUẢN LÝ TIẾN TRÌNH CÀO DỮ LIỆU (THREADING & CONTROLLER)
+    # QUAN LY TIEN TRINH CAO DU LIEU (THREADING & CONTROLLER)
     # ==========================================================================
 
     def start_scraping(self):
-        """Khởi động luồng cào dữ liệu."""
+        """Khoi dong luong cao du lieu."""
         raw_target = self.target_entry.get().strip()
         if not raw_target:
             messagebox.showwarning("Thiếu thông tin", "Vui lòng nhập Link, Package Name hoặc App ID!")
             return
 
-        # Kiểm tra số lượng
+        # Kiem tra so luong
         try:
             target_count = int(self.count_combobox.get().replace(",", "").replace(".", "").strip())
             if target_count <= 0:
@@ -935,7 +935,7 @@ class ScraperGUI:
 
         save_dir = self.save_dir_entry.get().strip() or os.getcwd()
 
-        # Xác định định dạng xuất
+        # Xac dinh dinh dang xuat
         fmt_choice = self.format_combobox.get()
         if "Excel" in fmt_choice:
             export_format = "xlsx"
@@ -944,31 +944,31 @@ class ScraperGUI:
         else:
             export_format = "both"
 
-        # Lấy thông số lọc sao
+        # Lay thong so loc sao
         star_str = self.star_combobox.get().strip()
         filter_star = 0
         if "Tất cả" in star_str:
-            filter_star = 0  # 0 nghĩa là cào tất cả các mức sao từ 1 đến 5 sao
+            filter_star = 0  # 0 nghia la cao tat ca cac muc sao tu 1 den 5 sao
         else:
             match_star = re.search(r'(\d+)\s*sao', star_str)
             if match_star:
                 filter_star = int(match_star.group(1))
 
-        # Lấy kiểu sắp xếp
+        # Lay kieu sap xep
         sort_choice = self.sort_combobox.get()
         sort_type = "most_relevant" if "Liên quan" in sort_choice else "newest"
 
-        # Lấy thông số quốc gia
+        # Lay thong so quoc gia
         country_code = self.country_combobox.get().split()[0].strip()
 
-        # Thiết lập trạng thái giao diện khi đang chạy
+        # Thiet lap trang thai giao dien khi dang chay
         self.stop_event.clear()
         self.btn_start.config(state="disabled")
         self.btn_stop.config(state="normal")
         self.progress_bar['value'] = 0
         self.status_lbl.config(text="Đang kết nối & cào dữ liệu...", foreground=self.COLOR_PRIMARY)
 
-        # Chạy trong luồng riêng để tránh làm đơ ứng dụng Tkinter
+        # Chay trong luong rieng de tranh lam do ung dung Tkinter
         self.scraping_thread = threading.Thread(
             target=self._worker_scrape,
             args=(
@@ -986,7 +986,7 @@ class ScraperGUI:
         self.scraping_thread.start()
 
     def stop_scraping(self):
-        """Gửi tín hiệu dừng cào dữ liệu."""
+        """Gui tin hieu dung cao du lieu."""
         if messagebox.askyesno("Xác nhận", "Bạn có chắc muốn dừng quá trình cào? Dữ liệu đã cào được sẽ vẫn được lưu lại."):
             self.stop_event.set()
             self.log_queue.put("[Yêu cầu dừng] Đang lưu lại các dữ liệu đã thu thập được...")
@@ -1003,12 +1003,12 @@ class ScraperGUI:
         save_dir: str,
         export_format: str
     ):
-        """Hàm thực thi trong luồng nền (Background Worker Thread)."""
+        """Ham thuc thi trong luong nen (Background Worker Thread)."""
         start_time = time.time()
         base_name = "scraped_data"
 
         try:
-            # 1. Thu thập dữ liệu theo nguồn
+            # 1. Thu thap du lieu theo nguon
             if source_type == "google_play":
                 app_id = extract_google_play_id(raw_target)
                 base_name = f"google_play_{app_id}"
@@ -1038,7 +1038,7 @@ class ScraperGUI:
                     progress_queue=self.progress_queue
                 )
 
-            else:  # Trang Web thông thường
+            else:  # Trang Web thong thuong
                 url = raw_target if raw_target.startswith("http") else f"https://{raw_target}"
                 domain = urllib.parse.urlparse(url).netloc
                 base_name = f"web_{domain}"
@@ -1050,14 +1050,14 @@ class ScraperGUI:
                     progress_queue=self.progress_queue
                 )
 
-            # 2. Xử lý & Làm sạch dữ liệu
+            # 2. Xu ly & Lam sach du lieu
             if df.empty:
                 self.log_queue.put("[Cảnh báo] Không tìm thấy dữ liệu nào phù hợp với yêu cầu.")
                 self.root.after(0, lambda: messagebox.showwarning("Kết quả rỗng", "Không tìm thấy dữ liệu nào. Vui lòng kiểm tra lại Link/ID hoặc kết nối mạng!"))
             else:
                 df = clean_and_process_dataframe(df, self.log_queue)
                 
-                # 3. Xuất file kết quả
+                # 3. Xuat file ket qua
                 saved_files = export_dataframe(df, save_dir, base_name, export_format, self.log_queue)
 
                 elapsed = round(time.time() - start_time, 2)
@@ -1066,7 +1066,7 @@ class ScraperGUI:
                 self.log_queue.put(f"[Thành công] {success_msg.replace(chr(10), ' | ')}")
                 self.log_queue.put("=" * 60)
 
-                # Hiển thị popup thông báo thành công
+                # Hien thi popup thong bao thanh cong
                 self.root.after(0, lambda: messagebox.showinfo("Cào dữ liệu thành công!", success_msg))
 
         except Exception as e:
@@ -1074,11 +1074,11 @@ class ScraperGUI:
             self.root.after(0, lambda err=str(e): messagebox.showerror("Lỗi thực thi", f"Đã xảy ra lỗi:\n{err}"))
 
         finally:
-            # Khôi phục trạng thái nút bấm trên giao diện
+            # Khoi phuc trang thai nut bam tren giao dien
             self.root.after(0, self._reset_ui_after_scraping)
 
     def _reset_ui_after_scraping(self):
-        """Khôi phục trạng thái giao diện sau khi luồng cào hoàn tất."""
+        """Khoi phuc trang thai giao dien sau khi luong cao hoan tat."""
         self.btn_start.config(state="normal")
         self.btn_stop.config(state="disabled")
         self.status_lbl.config(text="Đã hoàn thành công việc.", foreground=self.COLOR_SUCCESS)
@@ -1086,11 +1086,11 @@ class ScraperGUI:
 
 
 # ==============================================================================
-# 5. ĐIỂM KHỞI CHẠY CHƯƠNG TRÌNH (MAIN ENTRY)
+# 5. DIEM KHOI CHAY CHUONG TRINH (MAIN ENTRY)
 # ==============================================================================
 
 def main():
-    # Hỗ trợ hiển thị sắc nét trên màn hình độ phân giải cao (High DPI) của Windows
+    # Ho tro hien thi sac net tren man hinh do phan giai cao (High DPI) cua Windows
     try:
         from ctypes import windll
         windll.shcore.SetProcessDpiAwareness(1)

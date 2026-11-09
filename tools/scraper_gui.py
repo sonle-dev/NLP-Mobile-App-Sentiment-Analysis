@@ -114,13 +114,11 @@ def clean_text(text: str) -> str:
 
 
 def categorize_sentiment(rating: int) -> str:
-    """Gan nhan cam xuc so bo dua tren so sao rating."""
+    """Gan nhan cam xuc so bo dua tren so sao rating: 1, 2, 3 sao la Tieu cuc; 4, 5 sao la Tich cuc."""
     try:
         r = int(rating)
         if r >= 4:
             return "Tich cuc (Positive)"
-        elif r == 3:
-            return "Trung tinh (Neutral)"
         else:
             return "Tieu cuc (Negative)"
     except Exception:

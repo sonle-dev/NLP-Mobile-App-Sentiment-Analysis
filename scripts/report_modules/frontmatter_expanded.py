@@ -124,7 +124,7 @@ def add_frontmatter(doc):
     add_heading_1(doc, "LỜI CAM ĐOAN")
     add_body_p(doc, "Nhóm 12 xin cam đoan rằng công trình nghiên cứu và báo cáo dự án học phần Học máy với đề tài: \"Phân tích quan điểm phản hồi của người dùng về ứng dụng di động tại Việt Nam\" là kết quả nghiên cứu độc lập, trung thực của các thành viên trong nhóm dưới sự hướng dẫn trực tiếp của ThS. Hà Thị Thanh.")
     add_body_p(doc, "Toàn bộ số liệu thực nghiệm (14.910 đánh giá), các bảng thống kê mô tả, ma trận nhầm lẫn, biểu đồ trực quan hóa, bộ lọc khử nhiễu nghịch nhãn, mã nguồn huấn luyện mô hình, kiểm định chéo và mã nguồn xây dựng dịch vụ API/Dashboard đều được nhóm tự thiết kế, lập trình và thực thi thực tế trên môi trường máy tính tính toán cá nhân, không sao chép bất kỳ báo cáo hay kết quả có sẵn nào.")
-    add_body_p(doc, "Các tài liệu tham khảo, trích dẫn lý thuyết từ Giáo trình Học máy ICTU (năm 2026) của các tác giả TS. Trần Quang Quý, TS. Ngô Hữu Huy, TS. Nguyễn Đức Bình, TS. Nguyễn Tuấn Anh và các bài báo khoa học quốc tế đều được ghi chú nguồn và trích dẫn rõ ràng, chuẩn mực theo quy định học thuật.")
+    add_body_p(doc, "Các tài liệu tham khảo, trích dẫn lý thuyết từ các công trình nghiên cứu, sách chuyên khảo và các bài báo khoa học trong nước và quốc tế đều được ghi chú nguồn và trích dẫn rõ ràng, chuẩn mực theo quy định học thuật.")
     add_body_p(doc, "Nhóm 12 xin chịu hoàn toàn trách nhiệm trước Pháp luật, Nhà trường và Bộ môn nếu xảy ra bất kỳ sự vi phạm nào về tính trung thực của số liệu và quyền tác giả trong báo cáo này.")
 
     p_sig = doc.add_paragraph()
@@ -138,12 +138,12 @@ def add_frontmatter(doc):
     doc.add_page_break()
 
     # -------------------------------------------------------------
-    # 3. BẢNG PHÂN CÔNG NHIỆM VỤ VÀ BAREM TIÊU CHÍ CHẤM
+    # 3. BẢNG PHÂN CÔNG NHIỆM VỤ THÀNH VIÊN
     # -------------------------------------------------------------
-    add_heading_1(doc, "PHÂN CÔNG NHIỆM VỤ VÀ TIÊU CHÍ ĐÁNH GIÁ ĐỒ ÁN")
+    add_heading_1(doc, "PHÂN CÔNG NHIỆM VỤ CÁC THÀNH VIÊN")
     
     add_heading_2(doc, "Bảng phân công nhiệm vụ chi tiết thành viên Nhóm 12")
-    add_body_p(doc, "Dự án được triển khai với sự tham gia của 4 thành viên thuộc lớp CNTT K22B và K22C, phân công nhiệm vụ chuyên môn hóa theo đúng đăng ký đồ án:")
+    add_body_p(doc, "Dự án được triển khai với sự tham gia của 4 thành viên thuộc lớp CNTT K22B và K22C, phân công nhiệm vụ chuyên môn hóa theo đúng đề cương nghiên cứu:")
 
     t_assign = doc.add_table(rows=5, cols=5)
     t_assign.alignment = WD_TABLE_ALIGNMENT.CENTER
@@ -191,59 +191,6 @@ def add_frontmatter(doc):
                 r.font.bold = True
 
     add_body_p(doc, "\nBảng 0.1: Phân công nhiệm vụ chi tiết các thành viên Nhóm 12")
-
-    add_heading_2(doc, "Bảng đối chiếu Barem Tiêu chí chấm đồ án/dự án học phần Học máy")
-    add_body_p(doc, "Báo cáo và chương trình thực nghiệm của nhóm được xây dựng bám sát 100% Tiêu chí chấm đồ án của Giảng viên ThS. Hà Thị Thanh (Bộ môn Khoa học Máy tính - ICTU):")
-
-    t_rubric = doc.add_table(rows=8, cols=4)
-    t_rubric.alignment = WD_TABLE_ALIGNMENT.CENTER
-    w_rub = [Inches(1.2), Inches(2.8), Inches(0.8), Inches(1.4)]
-    headers_rub = ["Tiêu chí", "Nội dung yêu cầu chi tiết theo Barem", "Điểm", "Minh chứng trong báo cáo"]
-
-    hdr_r = t_rubric.rows[0]
-    for j, h in enumerate(headers_rub):
-        c = hdr_r.cells[j]
-        c.width = w_rub[j]
-        set_cell_background(c, "102C57")
-        set_cell_margins(c, 80, 80, 80, 80)
-        p = c.paragraphs[0]
-        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        r = p.add_run(h)
-        r.font.name = 'Times New Roman'
-        r.font.size = Pt(9.5)
-        r.font.bold = True
-        r.font.color.rgb = RGBColor(255, 255, 255)
-
-    data_rub = [
-        ("Tiêu chí 1: Báo cáo", "Báo cáo trình bày đúng mẫu quy định, bố cục rõ ràng, văn phong khoa học, logic chặt chẽ, đầy đủ cơ sở lý thuyết, trích dẫn tài liệu tham khảo chính xác.", "2.0 đ", "Đầy đủ 4 chương (48 trang), đúng thể thức ICTU, trích dẫn 18 tài liệu tham khảo."),
-        ("Tiêu chí 2 - Mục 1: EDA", "Thu thập dữ liệu, phân tích khám phá dữ liệu (EDA), thống kê mô tả, trực quan hóa biểu đồ phân bố nhãn, thuộc tính, độ dài từ.", "1.5 đ", "Mục 3.1: 8 hồ sơ ứng dụng, biểu đồ rating, n-gram, phân bố 7 khía cạnh."),
-        ("Tiêu chí 2 - Mục 2: Tiền xử lý", "Làm sạch dữ liệu, xử lý giá trị thiếu, ngoại lai, chuẩn hóa text, mã hóa đặc trưng vector phù hợp với bài toán học máy.", "1.5 đ", "Mục 3.2: 50 quy tắc teencode, khử nhiễu nghịch nhãn 1.240 mẫu, TF-IDF 24.619 chiều."),
-        ("Tiêu chí 2 - Mục 3: Huấn luyện", "Xây dựng và huấn luyện ít nhất 2 mô hình học máy trở lên, phân chia tập dữ liệu huấn luyện/kiểm thử hợp lý.", "1.0 đ", "Mục 3.3: Huấn luyện 4 mô hình (MNB, Logistic Regression, LinearSVC, Random Forest)."),
-        ("Tiêu chí 2 - Mục 4: Tinh chỉnh", "Tìm kiếm siêu tham số tối ưu (GridSearchCV / RandomSearchCV), so sánh đối chuẩn các mô hình để chọn ra mô hình tốt nhất.", "1.5 đ", "Mục 3.4: GridSearchCV 5-fold qua 15 tổ hợp tham số, chọn LinearSVC C=2.0."),
-        ("Tiêu chí 2 - Mục 5: Đánh giá & Lỗi", "Đánh giá mô hình trên tập kiểm thử bằng các độ đo (Accuracy, Precision, Recall, F1), phân tích lỗi (Error Analysis) chi tiết.", "1.5 đ", "Mục 3.5 & 3.6: Benchmark Test set, mổ xẻ 20 ca lỗi điển hình (10 FP, 10 FN)."),
-        ("Tiêu chí 2 - Mục 6: Dự đoán mới", "Đóng gói mô hình, xây dựng hàm dự đoán trên mẫu dữ liệu mới hoàn toàn, triển khai giao diện hoặc dịch vụ ứng dụng.", "1.0 đ", "Mục 3.7: Microservice FastAPI (< 0.3 ms/mẫu) và Dashboard Streamlit tương tác.")
-    ]
-
-    for i, row in enumerate(data_rub):
-        r_el = t_rubric.rows[i+1]
-        for j, val in enumerate(row):
-            c = r_el.cells[j]
-            c.width = w_rub[j]
-            set_cell_margins(c, 60, 60, 60, 60)
-            if i % 2 == 1:
-                set_cell_background(c, "F9FBFD")
-            p = c.paragraphs[0]
-            if j in [0, 2]:
-                p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            else:
-                p.alignment = WD_ALIGN_PARAGRAPH.LEFT
-            r = p.add_run(val)
-            r.font.name = 'Times New Roman'
-            r.font.size = Pt(8.5)
-            if j == 2:
-                r.font.bold = True
-
-    add_body_p(doc, "\nBảng 0.2: Khung đối chiếu Tiêu chí chấm điểm đồ án học phần Học máy của Bộ môn KHMT")
 
     doc.add_page_break()
 
@@ -376,14 +323,14 @@ def add_frontmatter(doc):
     r_tn = p_toc_note.add_run(
         "LỜI CẢM ƠN ................................................................................................................................ iii\n"
         "LỜI CAM ĐOAN ............................................................................................................................. iv\n"
-        "PHÂN CÔNG NHIỆM VỤ VÀ TIÊU CHÍ ĐÁNH GIÁ ĐỒ ÁN ................................................................... v\n"
+        "PHÂN CÔNG NHIỆM VỤ CÁC THÀNH VIÊN ................................................................................. v\n"
         "DANH MỤC CÁC TỪ VIẾT TẮT VÀ THUẬT NGỮ ............................................................................. vii\n"
         "DANH MỤC CÁC KÝ HIỆU TOÁN HỌC ........................................................................................... viii\n"
         "DANH MỤC CÁC BẢNG BIỂU ........................................................................................................... x\n"
         "DANH MỤC CÁC HÌNH VẼ VÀ ĐỒ THỊ .............................................................................................. xi\n\n"
         "CHƯƠNG 1: CƠ SỞ LÝ THUYẾT VÀ TỔNG QUAN BÀI TOÁN ............................................................. 1\n"
         "    1.1. Khái quát về Học máy và Xử lý ngôn ngữ tự nhiên (NLP) ........................................................ 1\n"
-        "    1.2. Quy trình thực hiện dự án học máy tiêu chuẩn (Chương 1 GT Học máy ICTU) ........................... 4\n"
+        "    1.2. Quy trình thực hiện dự án học máy tiêu chuẩn ................................................................. 4\n"
         "    1.3. Sự đánh đổi giữa Thiên lệch và Phương sai (Bias - Variance Tradeoff) .................................... 6\n"
         "    1.4. Bối cảnh kinh tế số và Tính cấp thiết của đề tài tại Việt Nam ................................................. 9\n"
         "    1.5. Thách thức đặc thù trong xử lý ngôn ngữ tự nhiên Tiếng Việt ................................................. 11\n"
@@ -392,26 +339,27 @@ def add_frontmatter(doc):
         "CHƯƠNG 2: PHƯƠNG PHÁP NGHIÊN CỨU VÀ CƠ SỞ TOÁN HỌC CÁC MÔ HÌNH ............................ 17\n"
         "    2.1. Quy trình Tiền xử lý dữ liệu văn bản tiếng Việt đa tầng ........................................................ 17\n"
         "    2.2. Xây dựng không gian đặc trưng bằng TF-IDF và Chuẩn hóa L2-norm ....................................... 20\n"
-        "    2.3. Cơ sở toán học Bộ phân loại Naive Bayes (Chương 6 GT Học máy ICTU) ................................. 23\n"
-        "    2.4. Cơ sở toán học Hồi quy Logistic và Điều chuẩn L2 (Chương 9 GT Học máy ICTU) .................. 25\n"
-        "    2.5. Cơ sở toán học Máy vector hỗ trợ - LinearSVC (Chương 10 GT Học máy ICTU) ...................... 27\n"
-        "    2.6. Cơ sở toán học Mô hình Rừng ngẫu nhiên (Chương 8 & 14 GT Học máy ICTU) ........................ 30\n"
+        "    2.3. Cơ sở toán học Bộ phân loại Naive Bayes ............................................................................ 23\n"
+        "    2.4. Cơ sở toán học Hồi quy Logistic và Điều chuẩn L2 .............................................................. 25\n"
+        "    2.5. Cơ sở toán học Máy vector hỗ trợ - LinearSVC .................................................................... 27\n"
+        "    2.6. Cơ sở toán học Mô hình Rừng ngẫu nhiên (Random Forest) .................................................... 30\n"
         "    2.7. Phương pháp luận Phân tích quan điểm theo khía cạnh (Joint ABSA) ....................................... 32\n"
         "    2.8. Hệ thống độ đo đánh giá hiệu năng mô hình (Evaluation Metrics) ........................................... 34\n\n"
-        "CHƯƠNG 3: KẾT QUẢ THỰC NGHIỆM VÀ ĐÁNH GIÁ THEO TIÊU CHÍ CHẤM ................................. 36\n"
-        "    3.1. Thu thập, phân tích và trực quan hóa dữ liệu EDA (Mục 1 Tiêu chí chấm - 1.5 đ) ................... 36\n"
-        "    3.2. Tiền xử lý dữ liệu và Khử nhiễu nghịch nhãn (Mục 2 Tiêu chí chấm - 1.5 đ) ........................... 40\n"
-        "    3.3. Huấn luyện mô hình học máy (Mục 3 Tiêu chí chấm - 1.0 đ) ................................................... 42\n"
-        "    3.4. Tìm mô hình tốt nhất & Tinh chỉnh siêu tham số (Mục 4 Tiêu chí chấm - 1.5 đ) ..................... 43\n"
-        "    3.5. Biện luận khoa học chuyên sâu: DỰA VÀO ĐÂU KẾT QUẢ ĐÓ LÀ ĐÚNG? ............................ 45\n"
-        "    3.6. Đánh giá và Phân tích lỗi - Error Analysis (Mục 5 Tiêu chí chấm - 1.5 đ) ................................ 47\n"
-        "    3.7. Dự đoán trên dữ liệu mới và Triển khai hệ thống (Mục 6 Tiêu chí chấm - 1.0 đ) ................... 50\n\n"
+        "CHƯƠNG 3: KẾT QUẢ THỰC NGHIỆM VÀ ĐÁNH GIÁ HỆ THỐNG ..................................................... 36\n"
+        "    3.1. Thu thập, phân tích và trực quan hóa dữ liệu (EDA) ............................................................ 36\n"
+        "    3.2. Tiền xử lý dữ liệu và Khử nhiễu nghịch nhãn ..................................................................... 40\n"
+        "    3.3. Huấn luyện các mô hình phân lớp học máy ........................................................................... 42\n"
+        "    3.4. Tìm mô hình tốt nhất và Tinh chỉnh siêu tham số ............................................................... 43\n"
+        "    3.5. Biện luận khoa học chuyên sâu: Dựa vào đâu kết quả đó là đúng? ....................................... 45\n"
+        "    3.6. Đánh giá chi tiết và Phân tích lỗi (Error Analysis) .............................................................. 47\n"
+        "    3.7. Dự đoán trên dữ liệu mới và Triển khai hệ thống ............................................................... 50\n\n"
         "KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN ................................................................................................ 53\n"
         "    1. Kết quả đạt được của Đồ án .................................................................................................... 53\n"
         "    2. Đối chiếu mức độ đáp ứng Chuẩn đầu ra học phần (CĐR HP) ..................................................... 53\n"
         "    3. Hạn chế còn tồn tại và Bài học kinh nghiệm ............................................................................ 55\n"
         "    4. Hướng phát triển và mở rộng trong tương lai ........................................................................... 55\n"
-        "TÀI LIỆU THAM KHẢO ....................................................................................................................... 56"
+        "TÀI LIỆU THAM KHẢO ....................................................................................................................... 56\n"
+        "PHỤ LỤC: MÃ NGUỒN CÁC MÔ-ĐUN TRIỂN KHAI ........................................................................... 58"
     )
     r_tn.font.name = 'Times New Roman'
     r_tn.font.size = Pt(10)

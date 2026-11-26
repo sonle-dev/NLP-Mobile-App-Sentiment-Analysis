@@ -36,7 +36,7 @@ Nhóm 12 xin cam đoan rằng công trình nghiên cứu và báo cáo dự án 
 
 Toàn bộ số liệu thực nghiệm (14.910 đánh giá), các bảng thống kê mô tả, ma trận nhầm lẫn, biểu đồ trực quan hóa, bộ lọc khử nhiễu nghịch nhãn, mã nguồn huấn luyện mô hình, kiểm định chéo và mã nguồn xây dựng dịch vụ API/Dashboard đều được nhóm tự thiết kế, lập trình và thực thi thực tế trên môi trường máy tính tính toán cá nhân, không sao chép bất kỳ báo cáo hay kết quả có sẵn nào.
 
-Các tài liệu tham khảo, trích dẫn lý thuyết từ Giáo trình Học máy ICTU (năm 2026) của các tác giả TS. Trần Quang Quý, TS. Ngô Hữu Huy, TS. Nguyễn Đức Bình, TS. Nguyễn Tuấn Anh và các bài báo khoa học quốc tế đều được ghi chú nguồn và trích dẫn rõ ràng, chuẩn mực theo quy định học thuật.
+Các tài liệu tham khảo, trích dẫn lý thuyết từ các công trình nghiên cứu, sách chuyên khảo và các bài báo khoa học trong nước và quốc tế đều được ghi chú nguồn và trích dẫn rõ ràng, chuẩn mực theo quy định học thuật.
 
 Nhóm 12 xin chịu hoàn toàn trách nhiệm trước Pháp luật, Nhà trường và Bộ môn nếu xảy ra bất kỳ sự vi phạm nào về tính trung thực của số liệu và quyền tác giả trong báo cáo này.
 
@@ -47,11 +47,11 @@ Thái Nguyên, ngày 26 tháng 11 năm 2026
 
 Lê Hồng Sơn
 
-PHÂN CÔNG NHIỆM VỤ VÀ TIÊU CHÍ ĐÁNH GIÁ ĐỒ ÁN
+PHÂN CÔNG NHIỆM VỤ CÁC THÀNH VIÊN
 
 Bảng phân công nhiệm vụ chi tiết thành viên Nhóm 12
 
-Dự án được triển khai với sự tham gia của 4 thành viên thuộc lớp CNTT K22B và K22C, phân công nhiệm vụ chuyên môn hóa theo đúng đăng ký đồ án:
+Dự án được triển khai với sự tham gia của 4 thành viên thuộc lớp CNTT K22B và K22C, phân công nhiệm vụ chuyên môn hóa theo đúng đề cương nghiên cứu:
 
 
 | STT | Mã sinh viên | Họ và tên | Nhiệm vụ đảm nhiệm trong dự án | Đánh giá |
@@ -63,24 +63,6 @@ Dự án được triển khai với sự tham gia của 4 thành viên thuộc 
 
 
 Bảng 0.1: Phân công nhiệm vụ chi tiết các thành viên Nhóm 12
-
-Bảng đối chiếu Barem Tiêu chí chấm đồ án/dự án học phần Học máy
-
-Báo cáo và chương trình thực nghiệm của nhóm được xây dựng bám sát 100% Tiêu chí chấm đồ án của Giảng viên ThS. Hà Thị Thanh (Bộ môn Khoa học Máy tính - ICTU):
-
-
-| Tiêu chí | Nội dung yêu cầu chi tiết theo Barem | Điểm | Minh chứng trong báo cáo |
-| --- | --- | --- | --- |
-| Tiêu chí 1: Báo cáo | Báo cáo trình bày đúng mẫu quy định, bố cục rõ ràng, văn phong khoa học, logic chặt chẽ, đầy đủ cơ sở lý thuyết, trích dẫn tài liệu tham khảo chính xác. | 2.0 đ | Đầy đủ 4 chương (48 trang), đúng thể thức ICTU, trích dẫn 18 tài liệu tham khảo. |
-| Tiêu chí 2 - Mục 1: EDA | Thu thập dữ liệu, phân tích khám phá dữ liệu (EDA), thống kê mô tả, trực quan hóa biểu đồ phân bố nhãn, thuộc tính, độ dài từ. | 1.5 đ | Mục 3.1: 8 hồ sơ ứng dụng, biểu đồ rating, n-gram, phân bố 7 khía cạnh. |
-| Tiêu chí 2 - Mục 2: Tiền xử lý | Làm sạch dữ liệu, xử lý giá trị thiếu, ngoại lai, chuẩn hóa text, mã hóa đặc trưng vector phù hợp với bài toán học máy. | 1.5 đ | Mục 3.2: 50 quy tắc teencode, khử nhiễu nghịch nhãn 1.240 mẫu, TF-IDF 24.619 chiều. |
-| Tiêu chí 2 - Mục 3: Huấn luyện | Xây dựng và huấn luyện ít nhất 2 mô hình học máy trở lên, phân chia tập dữ liệu huấn luyện/kiểm thử hợp lý. | 1.0 đ | Mục 3.3: Huấn luyện 4 mô hình (MNB, Logistic Regression, LinearSVC, Random Forest). |
-| Tiêu chí 2 - Mục 4: Tinh chỉnh | Tìm kiếm siêu tham số tối ưu (GridSearchCV / RandomSearchCV), so sánh đối chuẩn các mô hình để chọn ra mô hình tốt nhất. | 1.5 đ | Mục 3.4: GridSearchCV 5-fold qua 15 tổ hợp tham số, chọn LinearSVC C=2.0. |
-| Tiêu chí 2 - Mục 5: Đánh giá & Lỗi | Đánh giá mô hình trên tập kiểm thử bằng các độ đo (Accuracy, Precision, Recall, F1), phân tích lỗi (Error Analysis) chi tiết. | 1.5 đ | Mục 3.5 & 3.6: Benchmark Test set, mổ xẻ 20 ca lỗi điển hình (10 FP, 10 FN). |
-| Tiêu chí 2 - Mục 6: Dự đoán mới | Đóng gói mô hình, xây dựng hàm dự đoán trên mẫu dữ liệu mới hoàn toàn, triển khai giao diện hoặc dịch vụ ứng dụng. | 1.0 đ | Mục 3.7: Microservice FastAPI (< 0.3 ms/mẫu) và Dashboard Streamlit tương tác. |
-
-
-Bảng 0.2: Khung đối chiếu Tiêu chí chấm điểm đồ án học phần Học máy của Bộ môn KHMT
 
 DANH MỤC CÁC TỪ VIẾT TẮT VÀ THUẬT NGỮ
 
@@ -127,7 +109,7 @@ MỤC LỤC TỔNG QUÁT
 
 LỜI CẢM ƠN ................................................................................................................................ iii
 LỜI CAM ĐOAN ............................................................................................................................. iv
-PHÂN CÔNG NHIỆM VỤ VÀ TIÊU CHÍ ĐÁNH GIÁ ĐỒ ÁN ................................................................... v
+PHÂN CÔNG NHIỆM VỤ CÁC THÀNH VIÊN ................................................................................. v
 DANH MỤC CÁC TỪ VIẾT TẮT VÀ THUẬT NGỮ ............................................................................. vii
 DANH MỤC CÁC KÝ HIỆU TOÁN HỌC ........................................................................................... viii
 DANH MỤC CÁC BẢNG BIỂU ........................................................................................................... x
@@ -135,7 +117,7 @@ DANH MỤC CÁC HÌNH VẼ VÀ ĐỒ THỊ .....................................
 
 CHƯƠNG 1: CƠ SỞ LÝ THUYẾT VÀ TỔNG QUAN BÀI TOÁN ............................................................. 1
     1.1. Khái quát về Học máy và Xử lý ngôn ngữ tự nhiên (NLP) ........................................................ 1
-    1.2. Quy trình thực hiện dự án học máy tiêu chuẩn (Chương 1 GT Học máy ICTU) ........................... 4
+    1.2. Quy trình thực hiện dự án học máy tiêu chuẩn ................................................................. 4
     1.3. Sự đánh đổi giữa Thiên lệch và Phương sai (Bias - Variance Tradeoff) .................................... 6
     1.4. Bối cảnh kinh tế số và Tính cấp thiết của đề tài tại Việt Nam ................................................. 9
     1.5. Thách thức đặc thù trong xử lý ngôn ngữ tự nhiên Tiếng Việt ................................................. 11
@@ -145,21 +127,21 @@ CHƯƠNG 1: CƠ SỞ LÝ THUYẾT VÀ TỔNG QUAN BÀI TOÁN ...................
 CHƯƠNG 2: PHƯƠNG PHÁP NGHIÊN CỨU VÀ CƠ SỞ TOÁN HỌC CÁC MÔ HÌNH ............................ 17
     2.1. Quy trình Tiền xử lý dữ liệu văn bản tiếng Việt đa tầng ........................................................ 17
     2.2. Xây dựng không gian đặc trưng bằng TF-IDF và Chuẩn hóa L2-norm ....................................... 20
-    2.3. Cơ sở toán học Bộ phân loại Naive Bayes (Chương 6 GT Học máy ICTU) ................................. 23
-    2.4. Cơ sở toán học Hồi quy Logistic và Điều chuẩn L2 (Chương 9 GT Học máy ICTU) .................. 25
-    2.5. Cơ sở toán học Máy vector hỗ trợ - LinearSVC (Chương 10 GT Học máy ICTU) ...................... 27
-    2.6. Cơ sở toán học Mô hình Rừng ngẫu nhiên (Chương 8 & 14 GT Học máy ICTU) ........................ 30
+    2.3. Cơ sở toán học Bộ phân loại Naive Bayes ............................................................................ 23
+    2.4. Cơ sở toán học Hồi quy Logistic và Điều chuẩn L2 .............................................................. 25
+    2.5. Cơ sở toán học Máy vector hỗ trợ - LinearSVC .................................................................... 27
+    2.6. Cơ sở toán học Mô hình Rừng ngẫu nhiên (Random Forest) .................................................... 30
     2.7. Phương pháp luận Phân tích quan điểm theo khía cạnh (Joint ABSA) ....................................... 32
     2.8. Hệ thống độ đo đánh giá hiệu năng mô hình (Evaluation Metrics) ........................................... 34
 
-CHƯƠNG 3: KẾT QUẢ THỰC NGHIỆM VÀ ĐÁNH GIÁ THEO TIÊU CHÍ CHẤM ................................. 36
-    3.1. Thu thập, phân tích và trực quan hóa dữ liệu EDA (Mục 1 Tiêu chí chấm - 1.5 đ) ................... 36
-    3.2. Tiền xử lý dữ liệu và Khử nhiễu nghịch nhãn (Mục 2 Tiêu chí chấm - 1.5 đ) ........................... 40
-    3.3. Huấn luyện mô hình học máy (Mục 3 Tiêu chí chấm - 1.0 đ) ................................................... 42
-    3.4. Tìm mô hình tốt nhất & Tinh chỉnh siêu tham số (Mục 4 Tiêu chí chấm - 1.5 đ) ..................... 43
-    3.5. Biện luận khoa học chuyên sâu: DỰA VÀO ĐÂU KẾT QUẢ ĐÓ LÀ ĐÚNG? ............................ 45
-    3.6. Đánh giá và Phân tích lỗi - Error Analysis (Mục 5 Tiêu chí chấm - 1.5 đ) ................................ 47
-    3.7. Dự đoán trên dữ liệu mới và Triển khai hệ thống (Mục 6 Tiêu chí chấm - 1.0 đ) ................... 50
+CHƯƠNG 3: KẾT QUẢ THỰC NGHIỆM VÀ ĐÁNH GIÁ HỆ THỐNG ..................................................... 36
+    3.1. Thu thập, phân tích và trực quan hóa dữ liệu (EDA) ............................................................ 36
+    3.2. Tiền xử lý dữ liệu và Khử nhiễu nghịch nhãn ..................................................................... 40
+    3.3. Huấn luyện các mô hình phân lớp học máy ........................................................................... 42
+    3.4. Tìm mô hình tốt nhất và Tinh chỉnh siêu tham số ............................................................... 43
+    3.5. Biện luận khoa học chuyên sâu: Dựa vào đâu kết quả đó là đúng? ....................................... 45
+    3.6. Đánh giá chi tiết và Phân tích lỗi (Error Analysis) .............................................................. 47
+    3.7. Dự đoán trên dữ liệu mới và Triển khai hệ thống ............................................................... 50
 
 KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN ................................................................................................ 53
     1. Kết quả đạt được của Đồ án .................................................................................................... 53
@@ -167,6 +149,7 @@ KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN ........................................
     3. Hạn chế còn tồn tại và Bài học kinh nghiệm ............................................................................ 55
     4. Hướng phát triển và mở rộng trong tương lai ........................................................................... 55
 TÀI LIỆU THAM KHẢO ....................................................................................................................... 56
+PHỤ LỤC: MÃ NGUỒN CÁC MÔ-ĐUN TRIỂN KHAI ........................................................................... 58
 
 CHƯƠNG 1: CƠ SỞ LÝ THUYẾT VÀ TỔNG QUAN BÀI TOÁN
 
@@ -174,7 +157,7 @@ CHƯƠNG 1: CƠ SỞ LÝ THUYẾT VÀ TỔNG QUAN BÀI TOÁN
 
 1.1.1. Khái niệm và phân loại các phương pháp học máy
 
-Theo định nghĩa kinh điển của Tom Mitchell (1997) được tái khẳng định trong Chương 1 Giáo trình Học máy ICTU (năm 2026, tr. 11 - 15) của các tác giả TS. Trần Quang Quý, TS. Ngô Hữu Huy, TS. Nguyễn Đức Bình và TS. Nguyễn Tuấn Anh: "Một chương trình máy tính được coi là học từ kinh nghiệm E (Experience) đối với một lớp nhiệm vụ T (Task) và độ đo hiệu năng P (Performance), nếu hiệu năng của nó đối với các nhiệm vụ trong T, được đo bởi P, cải thiện cùng với kinh nghiệm E". Trong kỷ nguyên dữ liệu lớn (Big Data), học máy đóng vai trò là động lực cốt lõi cho phép hệ thống tự động trích xuất các quy luật tiềm ẩn từ dữ liệu quá khứ mà không cần lập trình các quy tắc logic thủ công tường minh.
+Theo định nghĩa kinh điển của Tom Mitchell (1997): "Một chương trình máy tính được coi là học từ kinh nghiệm E (Experience) đối với một lớp nhiệm vụ T (Task) và độ đo hiệu năng P (Performance), nếu hiệu năng của nó đối với các nhiệm vụ trong T, được đo bởi P, cải thiện cùng với kinh nghiệm E". Trong kỷ nguyên dữ liệu lớn (Big Data), học máy đóng vai trò là động lực cốt lõi cho phép hệ thống tự động trích xuất các quy luật tiềm ẩn từ dữ liệu quá khứ mà không cần lập trình các quy tắc logic thủ công tường minh.
 
 Căn cứ vào phương thức phản hồi của dữ liệu môi trường và bản chất của kinh nghiệm E, học máy được phân chia thành 4 phân nhánh chính:
 1. Học có giám sát (Supervised Learning): Tập dữ liệu huấn luyện bao gồm các cặp đầu vào - đầu ra mong muốn D = {(x_i, y_i)}_{i=1}^N. Mục tiêu là xấp xỉ hàm ánh xạ f: X -> Y sao cho cực tiểu hóa hàm mất mát (Loss Function) trên dữ liệu chưa từng quan sát. Bài toán phân loại cảm xúc (Sentiment Analysis) và phân loại khía cạnh (Aspect Classification) trong đồ án này thuộc lớp bài toán học có giám sát với nhãn cảm xúc rời rạc y ∈ {Tích cực, Tiêu cực}.
@@ -218,9 +201,9 @@ Trong lịch sử phát triển của NLP, đã có 5 trường phái tiếp c�
 
 Bảng 1.1: So sánh đối chuẩn toàn diện 5 trường phái công nghệ trong Xử lý ngôn ngữ tự nhiên
 
-1.2. Quy trình thực hiện dự án học máy tiêu chuẩn (Chương 1 GT Học máy ICTU)
+1.2. Quy trình thực hiện dự án học máy tiêu chuẩn
 
-Theo Chương 1 Giáo trình Học máy ICTU (năm 2026, tr. 16 - 22), quy trình phát triển một dự án học máy trong môi trường công nghiệp không phải là một chuỗi hành động ngẫu nhiên mà là một chu trình kỹ thuật 7 bước lặp khép kín (Iterative Engineering Pipeline). Nhóm 12 đã tuân thủ nghiêm ngặt chuẩn mực này để đảm bảo tính tái lập (Reproducibility) và độ tin cậy khoa học của toàn bộ kết quả thực nghiệm.
+Trong môi trường công nghiệp và nghiên cứu ứng dụng, quy trình phát triển một dự án học máy là một chu trình kỹ thuật 7 bước lặp khép kín (Iterative Engineering Pipeline). Nhóm 12 đã tuân thủ nghiêm ngặt chuẩn mực này để đảm bảo tính tái lập (Reproducibility) và độ tin cậy khoa học của toàn bộ kết quả thực nghiệm.
 
 
 | Bước | Tên giai đoạn | Dữ liệu đầu vào | Nội dung kỹ thuật thực hiện | Sản phẩm đầu ra |
@@ -240,7 +223,7 @@ Bảng 1.2: Chi tiết các giai đoạn triển khai trong Quy trình 7 bước
 
 1.3.1. Chứng minh toán học công thức phân rã sai số kỳ vọng
 
-Theo Mục 1.7 (tr. 33 - 35) của Giáo trình Học máy ICTU, sự đánh đổi giữa Thiên lệch (Bias) và Phương sai (Variance) là nguyên lý trung tâm chi phối khả năng tổng quát hóa của mọi mô hình học máy. Giả sử dữ liệu được sinh ra từ mối quan hệ thực tế: y = f(x) + ε, trong đó ε là nhiễu ngẫu nhiên độc lập với tập dữ liệu huấn luyện D, thỏa mãn kỳ vọng E[ε] = 0 và phương sai Var(ε) = σ².
+Trong lý thuyết học máy thống kê (Statistical Learning Theory), sự đánh đổi giữa Thiên lệch (Bias) và Phương sai (Variance) là nguyên lý toán học trung tâm chi phối khả năng tổng quát hóa của mọi mô hình học máy. Giả sử dữ liệu được sinh ra từ mối quan hệ thực tế: y = f(x) + ε, trong đó ε là nhiễu ngẫu nhiên độc lập với tập dữ liệu huấn luyện D, thỏa mãn kỳ vọng E[ε] = 0 và phương sai Var(ε) = σ².
 
 Xét sai số toàn phương kỳ vọng đối với một điểm dữ liệu mới x khi lấy kỳ vọng trên toàn bộ các tập huấn luyện D có thể có:
 
@@ -403,9 +386,9 @@ Trong đó: f_k là các hàm đặc trưng trích xuất từ ngữ cảnh (ti�
 
 Kết quả phân tách được liên kết bằng ký tự gạch dưới (Ví dụ: "chuyển_tiền", "sinh_trắc_học", "ứng_dụng", "hài_lòng"), giúp bảo toàn nguyên vẹn ngữ nghĩa đơn vị từ ghép trong các giai đoạn xử lý tiếp theo.
 
-2.2. Xây dựng không gian đặc trưng bằng TF-IDF và Chuẩn hóa L2-norm (Chương 2 GT Học máy ICTU)
+2.2. Xây dựng không gian đặc trưng bằng TF-IDF và Chuẩn hóa L2-norm
 
-Theo Chương 2 Giáo trình Học máy ICTU (năm 2026, tr. 45 - 52), để các thuật toán học máy có thể tính toán trên dữ liệu văn bản, ta cần chuyển đổi các chuỗi ký tự thành các vector số thực trong không gian Euclide. Phương pháp TF-IDF (Term Frequency - Inverse Document Frequency) kết hợp N-gram là kỹ thuật biểu diễn kinh điển nhưng đặc biệt hiệu quả, đánh giá tầm quan trọng của một từ vựng dựa trên tần suất xuất hiện cục bộ trong văn bản và độ hiếm gặp trên toàn bộ kho ngữ liệu.
+Để các thuật toán học máy có thể tính toán trên dữ liệu văn bản tự nhiên, ta cần chuyển đổi các chuỗi ký tự thành các vector số thực trong không gian Euclide. Phương pháp TF-IDF (Term Frequency - Inverse Document Frequency) kết hợp N-gram là kỹ thuật biểu diễn kinh điển nhưng đặc biệt hiệu quả, đánh giá tầm quan trọng của một từ vựng dựa trên tần suất xuất hiện cục bộ trong văn bản và độ hiếm gặp trên toàn bộ kho ngữ liệu.
 
 2.2.1. Tần suất từ (Term Frequency - TF) và Sublinear TF Scaling
 
@@ -447,9 +430,9 @@ Do độ dài của các phản hồi người dùng rất chênh lệch (từ 2
 
 Trong đó: ||w_d||₂ = √( ∑_{j=1}^V w_{thô}(t_j, d)² ). Sau chuẩn hóa, mọi vector văn bản đều có độ dài hình học bằng đúng 1: ||x_d||₂ = 1, nằm trong không gian Hilbert số chiều d = 24.619 chiều.
 
-2.3. Cơ sở toán học Bộ phân loại Naive Bayes (Chương 6 GT Học máy ICTU)
+2.3. Cơ sở toán học Bộ phân loại Naive Bayes
 
-Theo Chương 6 Giáo trình Học máy ICTU (năm 2026, tr. 142 - 156), bộ phân loại Naive Bayes là một trong những giải thuật phân lớp xác suất thống kê cơ bản và kinh điển nhất. Cho vector đặc trưng văn bản x = (x_1, x_2, ..., x_d) và tập các lớp mục tiêu C = {Tích cực, Tiêu cực}. Theo Định lý Bayes, xác suất hậu nghiệm (Posterior Probability) của lớp c khi quan sát văn bản x là:
+Bộ phân loại Naive Bayes là một trong những giải thuật phân lớp xác suất thống kê cơ bản và kinh điển nhất. Cho vector đặc trưng văn bản x = (x_1, x_2, ..., x_d) và tập các lớp mục tiêu C = {Tích cực, Tiêu cực}. Theo Định lý Bayes, xác suất hậu nghiệm (Posterior Probability) của lớp c khi quan sát văn bản x là:
 
 
 | P(y = c | x) = [ P(y = c) · P(x | y = c) ] / P(x)    (2.8) |
@@ -486,9 +469,9 @@ Trong đó: N_{cj} là tổng trọng số của từ j trong toàn bộ các v�
 
 Hạn chế chí mạng của Naive Bayes: Giả định độc lập điều kiện hoàn toàn trái ngược với thực tế ngôn ngữ tự nhiên, nơi các từ vựng luôn có mối liên kết cú pháp và ngữ nghĩa chặt chẽ (ví dụ: 'không' và 'được'). Do đó, MNB có xu hướng ước lượng xác suất hậu nghiệm bị lệch quá mức về hai cực 0 hoặc 1.
 
-2.4. Cơ sở toán học Hồi quy Logistic và Điều chuẩn L2 (Chương 9 GT Học máy ICTU)
+2.4. Cơ sở toán học Hồi quy Logistic và Điều chuẩn L2
 
-Theo Chương 9 Giáo trình Học máy ICTU (năm 2026, tr. 215 - 230), Hồi quy Logistic (Logistic Regression) là mô hình phân loại tuyến tính xác suất thuộc lớp mô hình phân biệt (Discriminative Models). Mô hình mô hình hóa trực tiếp xác suất hậu nghiệm P(y = 1 | x) thông qua hàm kích hoạt phi tuyến Sigmoid (Logistic Function):
+Hồi quy Logistic (Logistic Regression) là mô hình phân loại tuyến tính xác suất thuộc lớp mô hình phân biệt (Discriminative Models). Mô hình mô hình hóa trực tiếp xác suất hậu nghiệm P(y = 1 | x) thông qua hàm kích hoạt phi tuyến Sigmoid (Logistic Function):
 
 
 | σ(z) = 1 / (1 + e^{-z})    (2.13) |
@@ -525,9 +508,9 @@ Lấy logarit tự nhiên và đổi dấu để chuyển từ bài toán cực 
 
 Vì 0 < p_i < 1 nên p_i(1 - p_i) > 0, ma trận x_i x_i^T là ma trận nửa xác định dương, và số hạng điều chuẩn (1/C)I_d là xác định dương. Do đó, ma trận Hessian H_w luôn là ma trận đối xứng xác định dương (Positive Definite) trên toàn bộ không gian tham số. Điều này chứng minh rằng hàm mất mát J(w, b) là hàm lồi ngặt (Strictly Convex) và chỉ có duy nhất một điểm cực tiểu toàn cục (Global Minimum), hoàn toàn không bị kẹt ở các điểm cực tiểu địa phương. Thư viện Scikit-learn sử dụng giải thuật tối ưu hóa bậc hai tựa Newton L-BFGS (Limited-memory BFGS) xấp xỉ ma trận nghịch đảo Hessian H^{-1} để cập nhật nghiệm với tốc độ hội tụ siêu tuyến tính.
 
-2.5. Cơ sở toán học Máy vector hỗ trợ - SVM (Chương 10 GT Học máy ICTU)
+2.5. Cơ sở toán học Máy vector hỗ trợ (LinearSVC)
 
-Theo Chương 10 Giáo trình Học máy ICTU (năm 2026, tr. 245 - 268), Máy vector hỗ trợ (Support Vector Machines - SVM) do Vladimir Vapnik và Corinna Cortes phát minh là một trong những thuật toán học máy có nền tảng toán học đại số và hình học vững chắc nhất. Thay vì tối thiểu hóa sai số kinh nghiệm thông thường (Empirical Risk Minimization), SVM tối thiểu hóa sai số cấu trúc (Structural Risk Minimization) nhằm tìm kiếm một siêu phẳng phân tách có khoảng cách lề (Margin) rộng nhất đối với các điểm dữ liệu của cả hai lớp.
+Máy vector hỗ trợ (Support Vector Machines - SVM) do Vladimir Vapnik và Corinna Cortes phát minh là một trong những thuật toán học máy có nền tảng toán học đại số và hình học vững chắc nhất. Thay vì tối thiểu hóa sai số kinh nghiệm thông thường (Empirical Risk Minimization), SVM tối thiểu hóa sai số cấu trúc (Structural Risk Minimization) nhằm tìm kiếm một siêu phẳng phân tách có khoảng cách lề (Margin) rộng nhất đối với các điểm dữ liệu của cả hai lớp.
 
 Cho tập dữ liệu D = {(x_i, y_i)}_{i=1}^N với x_i ∈ R^d và y_i ∈ {-1, +1}. Siêu phẳng phân cách tuyến tính được định nghĩa:
 
@@ -591,9 +574,9 @@ Theo định lý Karush-Kuhn-Tucker (KKT), tại điểm nghiệm tối ưu, cá
 
 Trong thư viện `LinearSVC` (dựa trên giải thuật LIBLINEAR chuyên dụng cho bài toán tuyến tính số chiều lớn), mô hình sử dụng hàm mất mát bình phương bản lề Squared Hinge Loss: L₂(z) = [max(0, 1 - z)]². Hàm này khả vi liên tục bậc nhất, cho phép giải thuật hạ dốc tọa độ (Coordinate Descent) cập nhật nghiệm từng chiều một cách đóng kín (Closed-form update) với tốc độ hội tụ siêu nhanh, vượt trội hoàn toàn so với việc giải bài toán đối ngẫu bậc hai thông thường.
 
-2.6. Cơ sở toán học Mô hình Rừng ngẫu nhiên - Random Forest (Chương 8 & 14 GT Học máy ICTU)
+2.6. Cơ sở toán học Mô hình Rừng ngẫu nhiên (Random Forest)
 
-Theo Chương 8 và Chương 14 Giáo trình Học máy ICTU (năm 2026, tr. 190 - 212 & 335 - 350), Rừng ngẫu nhiên (Random Forest - RF) do Leo Breiman đề xuất là phương pháp học kết hợp (Ensemble Learning) hoạt động dựa trên nguyên lý Đóng bao (Bootstrap Aggregating - Bagging). Mô hình xây dựng một tập hợp gồm B cây quyết định độc lập {T_1, T_2, ..., T_B}.
+Rừng ngẫu nhiên (Random Forest - RF) do Leo Breiman đề xuất là phương pháp học kết hợp (Ensemble Learning) hoạt động dựa trên nguyên lý Đóng bao (Bootstrap Aggregating - Bagging). Mô hình xây dựng một tập hợp gồm B cây quyết định độc lập {T_1, T_2, ..., T_B}.
 
 Tại mỗi nút phân nhánh của cây quyết định, giải thuật tìm kiếm điểm chia cắt tối ưu dựa trên độ đo vẩn đục Gini Impurity:
 
@@ -749,11 +732,11 @@ Trong thư viện LinearSVC của Scikit-learn (dựa trên LIBLINEAR), hàm m�
 
 Tính chất khả vi liên tục này cho phép giải thuật hạ dốc tọa độ (Coordinate Descent) cập nhật từng biến trọng số w_j một cách đóng kín (Closed-form update) cực kỳ nhanh chóng, giúp LinearSVC huấn luyện toàn bộ 10.437 mẫu trên 24.619 chiều chỉ trong 0.0577 giây, nhanh gấp 3 lần so với Logistic Regression và nhanh gấp 11 lần so với Random Forest.
 
-CHƯƠNG 3: KẾT QUẢ THỰC NGHIỆM VÀ ĐÁNH GIÁ THEO TIÊU CHÍ CHẤM
+CHƯƠNG 3: KẾT QUẢ THỰC NGHIỆM VÀ ĐÁNH GIÁ HỆ THỐNG
 
-3.1. Thu thập, phân tích và trực quan hóa dữ liệu EDA (Mục 1 Tiêu chí chấm - 1.5 đ)
+3.1. Thu thập, phân tích và trực quan hóa dữ liệu (EDA)
 
-Tuân thủ chặt chẽ Mục 1 trong Barem Tiêu chí chấm (1.5 điểm), nhóm đã thực hiện thu thập dữ liệu tự động từ kho ứng dụng Google Play Store và Apple App Store thông qua API cào dữ liệu chuyên dụng. Tập dữ liệu sau khi tiền xử lý và loại bỏ các bản ghi trùng lặp đạt quy mô 14.910 đánh giá người dùng thực tế tại thị trường Việt Nam.
+Trong giai đoạn đầu của dự án, nhóm đã thực hiện thu thập dữ liệu tự động từ kho ứng dụng Google Play Store và Apple App Store thông qua API cào dữ liệu chuyên dụng. Tập dữ liệu sau khi tiền xử lý và loại bỏ các bản ghi trùng lặp đạt quy mô 14.910 đánh giá người dùng thực tế tại thị trường Việt Nam.
 
 Tập dữ liệu bao phủ 8 ứng dụng di động công nghệ đầu ngành thuộc 4 lĩnh vực tiêu biểu của nền kinh tế số: Ngân hàng số (MB Bank, Agribank), Ví điện tử Fintech (MoMo, ZaloPay), Thương mại điện tử & Giao đồ ăn (Shopee, ShopeeFood, Grab), và Mạng xã hội video ngắn (TikTok).
 
@@ -820,7 +803,7 @@ Khía cạnh chi phối: `Tinh_nang_Noi_dung` (41.5%) và `Hieu_nang_UI_UX` (28.
 • Điểm nghẽn kỹ thuật: Thuật toán gợi ý nội dung rất cuốn hút nhưng hệ thống kiểm duyệt tự động (AI Moderation) bị người sáng tạo nội dung chê trách là quá máy móc, đánh gậy bản quyền và cấm livestream vô cớ.
 • Trích dẫn tiêu biểu: 'Nội dung giải trí hay xem cuốn cả ngày, nhưng thuật toán quét vi phạm cộng đồng như đùa, video nấu ăn bình thường cũng bị báo vi phạm!'
 
-3.2. Tiền xử lý dữ liệu và Khử nhiễu nghịch nhãn (Mục 2 Tiêu chí chấm - 1.5 đ)
+3.2. Tiền xử lý dữ liệu và Khử nhiễu nghịch nhãn
 
 Trong quá trình phân tích dữ liệu, nhóm phát hiện một lỗ hổng chí mạng của phương pháp gán nhãn tự động truyền thống dựa trên số sao (Rating-based Labelling: 1-2-3 sao gán nhãn Tiêu cực, 4-5 sao gán nhãn Tích cực):
 
@@ -874,9 +857,9 @@ Bảng 3.2: Danh sách 30 mẫu kiểm toán thực tế chứng minh hiệu qu�
 
 Kết quả định lượng: Bộ lọc đã phát hiện và chuẩn hóa chính xác 1.240 mẫu nghịch nhãn (chiếm 8.32% tổng số dữ liệu), đồng thời loại bỏ 182 mẫu spam vô nghĩa, giúp tập dữ liệu đạt chuẩn nhãn vàng (Gold Standard) trước khi đưa vào huấn luyện.
 
-3.3. Huấn luyện mô hình học máy (Mục 3 Tiêu chí chấm - 1.0 đ)
+3.3. Huấn luyện các mô hình phân lớp học máy
 
-Tuân thủ Mục 3 Tiêu chí chấm (1.0 điểm), nhóm tiến hành phân chia tập dữ liệu 14.910 mẫu đã làm sạch thành 3 tập độc lập theo tỷ lệ chuẩn công nghiệp 70% Train - 15% Validation - 15% Test bằng phương pháp phân tầng Stratified Shuffle Split để giữ nguyên tỷ lệ nhãn cảm xúc và khía cạnh nghiệp vụ trên từng tập:
+Sau khi hoàn thành tiền xử lý, nhóm tiến hành phân chia tập dữ liệu 14.910 mẫu đã làm sạch thành 3 tập độc lập theo tỷ lệ chuẩn công nghiệp 70% Train - 15% Validation - 15% Test bằng phương pháp phân tầng Stratified Shuffle Split để giữ nguyên tỷ lệ nhãn cảm xúc và khía cạnh nghiệp vụ trên từng tập:
 
 • Tập huấn luyện (Training Set): 10.437 mẫu (70%) - dùng để fit trọng số mô hình.
 • Tập phát triển (Validation Set): 2.236 mẫu (15%) - dùng để tinh chỉnh siêu tham số và chọn mô hình.
@@ -895,9 +878,9 @@ Bốn thuật toán học máy đại diện cho các trường phái khác nhau
 
 Bảng 3.3: Cấu hình tham số và đo lường tài nguyên huấn luyện ban đầu của 4 mô hình
 
-3.4. Tìm mô hình tốt nhất & Tinh chỉnh siêu tham số (Mục 4 Tiêu chí chấm - 1.5 đ)
+3.4. Tìm mô hình tốt nhất và Tinh chỉnh siêu tham số
 
-Để tìm kiếm cấu hình tối ưu và lựa chọn mô hình tốt nhất theo Mục 4 Tiêu chí chấm (1.5 điểm), nhóm thiết lập quy trình kiểm định chéo 5-fold Stratified Cross-Validation kết hợp giải thuật tìm kiếm lưới toàn diện (GridSearchCV).
+Để tìm kiếm cấu hình tham số tối ưu và lựa chọn mô hình có khả năng tổng quát hóa cao nhất, nhóm thiết lập quy trình kiểm định chéo 5-fold Stratified Cross-Validation kết hợp giải thuật tìm kiếm lưới toàn diện (GridSearchCV).
 
 Không gian tìm kiếm siêu tham số được khảo sát trên hai mô hình dẫn đầu (LinearSVC và Logistic Regression) qua các tham số điều chuẩn C ∈ [0.1, 0.5, 1.0, 2.0, 5.0, 10.0] và hàm mất mát loss ∈ ['hinge', 'squared_hinge']:
 
@@ -947,7 +930,7 @@ Bảng 3.5: Bảng đối chuẩn hiệu năng toàn diện của 4 mô hình tr
 Để trả lời câu hỏi cốt lõi của Giảng viên: "Dựa vào đâu để khẳng định kết quả trên là chính xác, tin cậy và không phải do ngẫu nhiên hay gian lận số liệu?", nhóm đưa ra 4 trụ cột biện luận khoa học không thể bác bỏ:
 
 
-| 4 TRỤ CỘT KHOA HỌC CHỨNG MINH TÍNH ĐÚNG ĐẮN VÀ TIN CẬY CỦA KẾT QUẢ:  • TRỤ CỘT 1: BẢN CHẤT HÌNH HỌC LỀ CỰC ĐẠI CỦA SVM TRONG KHÔNG GIAN THƯA SỐ CHIỀU CAO (d = 24.619 chiều). Theo định lý hình học của Vapnik & Cortes (1995) và Joachims (1998), trong không gian văn bản số chiều lớn d >> N, hầu hết các điểm dữ liệu đều có thể phân tách tuyến tính. SVM tối đa hóa khoảng cách lề hình học γ = 1/||w||₂, giúp siêu phẳng nằm ở vị trí cân bằng nhất giữa hai lớp, ngăn chặn hiện tượng quá khớp mà không cần giảm chiều. • TRỤ CỘT 2: CÂN BẰNG TỐI ƯU BIAS-VARIANCE THÔNG QUA ĐIỀU CHUẨN L2 VÀ SQUARED HINGE LOSS. Hàm mất mát bình phương bản lề L₂(z) = [max(0, 1 - z)]² phạt nặng các điểm vi phạm lề lớn nhưng mượt mà với các điểm vi phạm nhỏ, triệt tiêu phương sai nhiễu. Tham số C = 2.0 đã được chứng minh tối ưu qua 5-Fold Cross Validation trên tập Train và tiếp tục cho kết quả F1 cao nhất trên tập Test (90.38%), chứng minh không có hiện tượng Data Leakage. • TRỤ CỘT 3: KHẮC PHỤC TRIỆT ĐỂ VI PHẠM ĐỘC LẬP ĐIỀU KIỆN CỦA NAIVE BAYES. Naive Bayes giả định các từ độc lập điều kiện, nhưng trong tiếng Việt các từ ghép cặp luôn phụ thuộc lẫn nhau ('không' + 'thể' + 'đăng_nhập'). Việc giải định sai khiến MNB chỉ đạt F1 = 86.29%. LinearSVC và Logistic Regression là các mô hình phân biệt (Discriminative) tính toán trọng số tương quan w_j tự do, phản ánh đúng bản chất ngôn ngữ. • TRỤ CỘT 4: KIỂM ĐỊNH ĐỘC LẬP NGHIÊM NGẶT TRÊN UNSEEN TEST SET THEO GIÁO TRÌNH ICTU. Toàn bộ quy trình từ tiền xử lý, tính toán IDF đến tìm kiếm siêu tham số chỉ sử dụng dữ liệu tập Train. Tập Test gồm 2.237 mẫu được khóa kín hoàn toàn cho đến bước cuối cùng. Hiệu năng Test Set (90.38%) khớp hoàn toàn với hiệu năng CV tập Train (90.28% ± 0.32%), loại bỏ hoàn toàn khả năng rò rỉ dữ liệu. |
+| 4 TRỤ CỘT KHOA HỌC CHỨNG MINH TÍNH ĐÚNG ĐẮN VÀ TIN CẬY CỦA KẾT QUẢ:  • TRỤ CỘT 1: BẢN CHẤT HÌNH HỌC LỀ CỰC ĐẠI CỦA SVM TRONG KHÔNG GIAN THƯA SỐ CHIỀU CAO (d = 24.619 chiều). Theo định lý hình học của Vapnik & Cortes (1995) và Joachims (1998), trong không gian văn bản số chiều lớn d >> N, hầu hết các điểm dữ liệu đều có thể phân tách tuyến tính. SVM tối đa hóa khoảng cách lề hình học γ = 1/||w||₂, giúp siêu phẳng nằm ở vị trí cân bằng nhất giữa hai lớp, ngăn chặn hiện tượng quá khớp mà không cần giảm chiều. • TRỤ CỘT 2: CÂN BẰNG TỐI ƯU BIAS-VARIANCE THÔNG QUA ĐIỀU CHUẨN L2 VÀ SQUARED HINGE LOSS. Hàm mất mát bình phương bản lề L₂(z) = [max(0, 1 - z)]² phạt nặng các điểm vi phạm lề lớn nhưng mượt mà với các điểm vi phạm nhỏ, triệt tiêu phương sai nhiễu. Tham số C = 2.0 đã được chứng minh tối ưu qua 5-Fold Cross Validation trên tập Train và tiếp tục cho kết quả F1 cao nhất trên tập Test (90.38%), chứng minh không có hiện tượng Data Leakage. • TRỤ CỘT 3: KHẮC PHỤC TRIỆT ĐỂ VI PHẠM ĐỘC LẬP ĐIỀU KIỆN CỦA NAIVE BAYES. Naive Bayes giả định các từ độc lập điều kiện, nhưng trong tiếng Việt các từ ghép cặp luôn phụ thuộc lẫn nhau ('không' + 'thể' + 'đăng_nhập'). Việc giải định sai khiến MNB chỉ đạt F1 = 86.29%. LinearSVC và Logistic Regression là các mô hình phân biệt (Discriminative) tính toán trọng số tương quan w_j tự do, phản ánh đúng bản chất ngôn ngữ. • TRỤ CỘT 4: KIỂM ĐỊNH ĐỘC LẬP NGHIÊM NGẶT TRÊN UNSEEN TEST SET THEO NGUYÊN TẮC CÁCH LY DỮ LIỆU. Toàn bộ quy trình từ tiền xử lý, tính toán IDF đến tìm kiếm siêu tham số chỉ sử dụng dữ liệu tập Train. Tập Test gồm 2.237 mẫu được khóa kín hoàn toàn cho đến bước cuối cùng. Hiệu năng Test Set (90.38%) khớp hoàn toàn với hiệu năng CV tập Train (90.28% ± 0.32%), loại bỏ hoàn toàn khả năng rò rỉ dữ liệu. |
 | --- |
 
 
@@ -985,9 +968,9 @@ Bên cạnh đó, đối với bài toán phân loại 7 khía cạnh nghiệp v
 
 Bảng 3.5.2: Báo cáo hiệu năng chi tiết trên từng lớp khía cạnh nghiệp vụ bằng mô hình LinearSVC
 
-3.6. Đánh giá và Phân tích lỗi - Error Analysis (Mục 5 Tiêu chí chấm - 1.5 đ)
+3.6. Đánh giá chi tiết và Phân tích lỗi (Error Analysis)
 
-Tuân thủ chặt chẽ Mục 5 Tiêu chí chấm (1.5 điểm), việc đánh giá một hệ thống học máy không dừng lại ở các con số thống kê tổng quát, mà phải tiến hành mổ xẻ định tính các trường hợp mô hình dự đoán sai lệch (Error Analysis) nhằm tìm ra nguyên nhân gốc rễ (Root Cause) và đề xuất giải pháp kỹ thuật khắc phục.
+Trong kỹ thuật học máy thực nghiệm, việc đánh giá một hệ thống không dừng lại ở các con số thống kê tổng quát, không dừng lại ở các con số thống kê tổng quát, mà phải tiến hành mổ xẻ định tính các trường hợp mô hình dự đoán sai lệch (Error Analysis) nhằm tìm ra nguyên nhân gốc rễ (Root Cause) và đề xuất giải pháp kỹ thuật khắc phục.
 
 Nhóm đã rà soát toàn bộ các mẫu bị phân loại sai trên tập Test Set (2.237 mẫu) và lập bảng phân tích chuyên sâu cho 20 ca lỗi điển hình nhất (bao gồm 10 ca Dương tính giả - False Positive và 10 ca Âm tính giả - False Negative):
 
@@ -1036,9 +1019,9 @@ Dựa trên kết quả phân tích 20 ca lỗi, nhóm đề xuất 3 giải ph�
 2. Bổ sung cơ chế phát hiện cấu trúc chuyển ý đối lập: Sử dụng các mẫu Regex bắt các liên từ chuyển ý ('nhưng', 'tuy nhiên', 'bù lại', 'ai ngờ') để tăng trọng số biểu diễn cho vế câu xuất hiện phía sau liên từ.
 3. Mở rộng kiến trúc Hybrid Ensemble: Kết hợp bộ phân loại LinearSVC hiện tại với mô hình ngôn ngữ lớn PhoBERT để xử lý riêng các câu có cấu trúc mỉa mai sâu hoặc câu ghép đối lập phức tạp.
 
-3.7. Dự đoán trên dữ liệu mới và Triển khai hệ thống (Mục 6 Tiêu chí chấm - 1.0 đ)
+3.7. Dự đoán trên dữ liệu mới và Triển khai hệ thống
 
-Tuân thủ Mục 6 Tiêu chí chấm (1.0 điểm), toàn bộ các mô hình tối ưu đã huấn luyện được đóng gói thành các tệp nhị phân tuần tự hóa `best_sentiment_model.joblib`, `best_aspect_model.joblib` và `tfidf_vectorizer.joblib` với tổng kích thước siêu nhẹ chỉ 8.4 MB.
+Sau khi hoàn thành đánh giá thực nghiệm, toàn bộ các mô hình tối ưu đã huấn luyện được đóng gói thành các tệp nhị phân tuần tự hóa `best_sentiment_model.joblib`, `best_aspect_model.joblib` và `tfidf_vectorizer.joblib` với tổng kích thước siêu nhẹ chỉ 8.4 MB.
 
 Nhóm đã xây dựng hoàn chỉnh một hàm suy luận thời gian thực và kiểm thử dự đoán trên 5 kịch bản phản hồi hoàn toàn mới ngoài thực tế:
 
@@ -1114,7 +1097,7 @@ KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN
 
 Sau quá trình nghiên cứu lý thuyết, thu thập dữ liệu và triển khai thực nghiệm nghiêm túc, đề tài "Phân tích quan điểm phản hồi của người dùng về ứng dụng di động tại Việt Nam" của Nhóm 12 đã hoàn thành toàn diện và xuất sắc toàn bộ các mục tiêu đề ra ban đầu:
 
-1. Về cơ sở lý thuyết và phương pháp luận: Đề tài đã hệ thống hóa và chứng minh chặt chẽ cơ sở toán học của 4 mô hình học máy kinh điển (Multinomial Naive Bayes, Logistic Regression, LinearSVC, Random Forest), định lý phân rã sai số Bias-Variance, và kỹ thuật điều chuẩn L2 bám sát Chương 1, 2, 6, 8, 9, 10, 14 của Giáo trình Học máy ICTU (2026).
+1. Về cơ sở lý thuyết và phương pháp luận: Đề tài đã hệ thống hóa và chứng minh chặt chẽ cơ sở toán học của 4 mô hình học máy kinh điển (Multinomial Naive Bayes, Logistic Regression, LinearSVC, Random Forest), định lý phân rã sai số Bias-Variance, và kỹ thuật điều chuẩn L2.
 
 2. Về dữ liệu và tiền xử lý: Xây dựng thành công tập dữ liệu quy mô lớn gồm 14.910 đánh giá người dùng thực tế từ 8 ứng dụng di động đầu ngành tại Việt Nam; thiết lập bộ từ điển 50 quy tắc Teencode chuẩn mực; và phát minh Bộ lọc Khử nhiễu nghịch nhãn (Sarcasm & Rating Audit) chuẩn hóa 1.240 mẫu mâu thuẫn sao, đưa tập dữ liệu đạt chuẩn nhãn vàng.
 

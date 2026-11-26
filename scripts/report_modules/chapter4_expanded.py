@@ -24,7 +24,7 @@ def add_chapter4(doc):
     add_heading_2(doc, "1. Kết quả đạt được của Đồ án")
     add_body_p(doc, "Sau quá trình nghiên cứu lý thuyết, thu thập dữ liệu và triển khai thực nghiệm nghiêm túc, đề tài \"Phân tích quan điểm phản hồi của người dùng về ứng dụng di động tại Việt Nam\" của Nhóm 12 đã hoàn thành toàn diện và xuất sắc toàn bộ các mục tiêu đề ra ban đầu:")
     
-    add_body_p(doc, "1. Về cơ sở lý thuyết và phương pháp luận: Đề tài đã hệ thống hóa và chứng minh chặt chẽ cơ sở toán học của 4 mô hình học máy kinh điển (Multinomial Naive Bayes, Logistic Regression, LinearSVC, Random Forest), định lý phân rã sai số Bias-Variance, và kỹ thuật điều chuẩn L2 bám sát Chương 1, 2, 6, 8, 9, 10, 14 của Giáo trình Học máy ICTU (2026).")
+    add_body_p(doc, "1. Về cơ sở lý thuyết và phương pháp luận: Đề tài đã hệ thống hóa và chứng minh chặt chẽ cơ sở toán học của 4 mô hình học máy kinh điển (Multinomial Naive Bayes, Logistic Regression, LinearSVC, Random Forest), định lý phân rã sai số Bias-Variance, và kỹ thuật điều chuẩn L2.")
     
     add_body_p(doc, "2. Về dữ liệu và tiền xử lý: Xây dựng thành công tập dữ liệu quy mô lớn gồm 14.910 đánh giá người dùng thực tế từ 8 ứng dụng di động đầu ngành tại Việt Nam; thiết lập bộ từ điển 50 quy tắc Teencode chuẩn mực; và phát minh Bộ lọc Khử nhiễu nghịch nhãn (Sarcasm & Rating Audit) chuẩn hóa 1.240 mẫu mâu thuẫn sao, đưa tập dữ liệu đạt chuẩn nhãn vàng.")
 

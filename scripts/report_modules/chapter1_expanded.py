@@ -24,7 +24,7 @@ def add_chapter1(doc):
     add_heading_2(doc, "1.1. Khái quát về Học máy và Xử lý ngôn ngữ tự nhiên (NLP)")
     
     add_heading_3(doc, "1.1.1. Khái niệm và phân loại các phương pháp học máy")
-    add_body_p(doc, "Theo định nghĩa kinh điển của Tom Mitchell (1997) được tái khẳng định trong Chương 1 Giáo trình Học máy ICTU (năm 2026, tr. 11 - 15) của các tác giả TS. Trần Quang Quý, TS. Ngô Hữu Huy, TS. Nguyễn Đức Bình và TS. Nguyễn Tuấn Anh: \"Một chương trình máy tính được coi là học từ kinh nghiệm E (Experience) đối với một lớp nhiệm vụ T (Task) và độ đo hiệu năng P (Performance), nếu hiệu năng của nó đối với các nhiệm vụ trong T, được đo bởi P, cải thiện cùng với kinh nghiệm E\". Trong kỷ nguyên dữ liệu lớn (Big Data), học máy đóng vai trò là động lực cốt lõi cho phép hệ thống tự động trích xuất các quy luật tiềm ẩn từ dữ liệu quá khứ mà không cần lập trình các quy tắc logic thủ công tường minh.")
+    add_body_p(doc, "Theo định nghĩa kinh điển của Tom Mitchell (1997): \"Một chương trình máy tính được coi là học từ kinh nghiệm E (Experience) đối với một lớp nhiệm vụ T (Task) và độ đo hiệu năng P (Performance), nếu hiệu năng của nó đối với các nhiệm vụ trong T, được đo bởi P, cải thiện cùng với kinh nghiệm E\". Trong kỷ nguyên dữ liệu lớn (Big Data), học máy đóng vai trò là động lực cốt lõi cho phép hệ thống tự động trích xuất các quy luật tiềm ẩn từ dữ liệu quá khứ mà không cần lập trình các quy tắc logic thủ công tường minh.")
     
     add_body_p(doc, "Căn cứ vào phương thức phản hồi của dữ liệu môi trường và bản chất của kinh nghiệm E, học máy được phân chia thành 4 phân nhánh chính:\n"
                   "1. Học có giám sát (Supervised Learning): Tập dữ liệu huấn luyện bao gồm các cặp đầu vào - đầu ra mong muốn D = {(x_i, y_i)}_{i=1}^N. Mục tiêu là xấp xỉ hàm ánh xạ f: X -> Y sao cho cực tiểu hóa hàm mất mát (Loss Function) trên dữ liệu chưa từng quan sát. Bài toán phân loại cảm xúc (Sentiment Analysis) và phân loại khía cạnh (Aspect Classification) trong đồ án này thuộc lớp bài toán học có giám sát với nhãn cảm xúc rời rạc y ∈ {Tích cực, Tiêu cực}.\n"
@@ -99,8 +99,8 @@ def add_chapter1(doc):
     # -------------------------------------------------------------
     # 1.2. QUY TRÌNH THỰC HIỆN DỰ ÁN HỌC MÁY TIÊU CHUẨN
     # -------------------------------------------------------------
-    add_heading_2(doc, "1.2. Quy trình thực hiện dự án học máy tiêu chuẩn (Chương 1 GT Học máy ICTU)")
-    add_body_p(doc, "Theo Chương 1 Giáo trình Học máy ICTU (năm 2026, tr. 16 - 22), quy trình phát triển một dự án học máy trong môi trường công nghiệp không phải là một chuỗi hành động ngẫu nhiên mà là một chu trình kỹ thuật 7 bước lặp khép kín (Iterative Engineering Pipeline). Nhóm 12 đã tuân thủ nghiêm ngặt chuẩn mực này để đảm bảo tính tái lập (Reproducibility) và độ tin cậy khoa học của toàn bộ kết quả thực nghiệm.")
+    add_heading_2(doc, "1.2. Quy trình thực hiện dự án học máy tiêu chuẩn")
+    add_body_p(doc, "Trong môi trường công nghiệp và nghiên cứu ứng dụng, quy trình phát triển một dự án học máy là một chu trình kỹ thuật 7 bước lặp khép kín (Iterative Engineering Pipeline). Nhóm 12 đã tuân thủ nghiêm ngặt chuẩn mực này để đảm bảo tính tái lập (Reproducibility) và độ tin cậy khoa học của toàn bộ kết quả thực nghiệm.")
 
     t_7steps = doc.add_table(rows=8, cols=5)
     t_7steps.alignment = WD_TABLE_ALIGNMENT.CENTER
@@ -157,7 +157,7 @@ def add_chapter1(doc):
     # -------------------------------------------------------------
     add_heading_2(doc, "1.3. Sự đánh đổi giữa Thiên lệch và Phương sai (Bias - Variance Tradeoff)")
     add_heading_3(doc, "1.3.1. Chứng minh toán học công thức phân rã sai số kỳ vọng")
-    add_body_p(doc, "Theo Mục 1.7 (tr. 33 - 35) của Giáo trình Học máy ICTU, sự đánh đổi giữa Thiên lệch (Bias) và Phương sai (Variance) là nguyên lý trung tâm chi phối khả năng tổng quát hóa của mọi mô hình học máy. Giả sử dữ liệu được sinh ra từ mối quan hệ thực tế: y = f(x) + ε, trong đó ε là nhiễu ngẫu nhiên độc lập với tập dữ liệu huấn luyện D, thỏa mãn kỳ vọng E[ε] = 0 và phương sai Var(ε) = σ².")
+    add_body_p(doc, "Trong lý thuyết học máy thống kê (Statistical Learning Theory), sự đánh đổi giữa Thiên lệch (Bias) và Phương sai (Variance) là nguyên lý toán học trung tâm chi phối khả năng tổng quát hóa của mọi mô hình học máy. Giả sử dữ liệu được sinh ra từ mối quan hệ thực tế: y = f(x) + ε, trong đó ε là nhiễu ngẫu nhiên độc lập với tập dữ liệu huấn luyện D, thỏa mãn kỳ vọng E[ε] = 0 và phương sai Var(ε) = σ².")
     
     add_body_p(doc, "Xét sai số toàn phương kỳ vọng đối với một điểm dữ liệu mới x khi lấy kỳ vọng trên toàn bộ các tập huấn luyện D có thể có:")
     add_math_block(doc, "E_D[(y - f̂(x))²] = E_D[(f(x) + ε - f̂(x))²]", "1.2")

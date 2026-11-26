@@ -50,24 +50,17 @@ def main():
     out2 = "Nhom_12/Bao_Cao_Du_An_Hoc_May_Nhom_12_Hoan_Chinh_50Trang.docx"
     out3 = "Nhom_12/Bao_Cao_Du_An_Hoc_May_Nhom_12.docx"
     out4 = "Nhom_12/Bao_Cao_Du_An_Hoc_May_Nhom_12_Ban_In_Chuan.docx"
+    out5 = "Nhom_12/Bao_Cao_Du_An_Hoc_May_Nhom_12_Final.docx"
     
     doc.save(out1)
     print(f"[✓] Luu thanh cong tai: {out1}")
-    
-    doc.save(out4)
-    print(f"[✓] Luu thanh cong tai: {out4}")
 
-    try:
-        doc.save(out2)
-        print(f"[✓] Luu thanh cong tai: {out2}")
-    except PermissionError:
-        print(f"[!] {out2} dang mo trong Word, da luu ban moi nhat tai {out4} va {out1}!")
-    
-    try:
-        doc.save(out3)
-        print(f"[✓] Luu thanh cong tai: {out3}")
-    except PermissionError:
-        print(f"[!] {out3} dang mo trong Word!")
+    for out_path in [out4, out5, out2, out3]:
+        try:
+            doc.save(out_path)
+            print(f"[✓] Luu thanh cong tai: {out_path}")
+        except PermissionError:
+            print(f"[!] {out_path} dang mo trong Word!")
 
     # Check page count with Word COM
     try:

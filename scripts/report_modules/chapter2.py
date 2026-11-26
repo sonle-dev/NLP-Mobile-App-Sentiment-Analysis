@@ -78,7 +78,7 @@ def add_chapter2(doc):
     add_heading_3(doc, "2.1.3. Thuật toán phân tách từ ghép tiếng Việt (Word Segmentation)")
     add_body_p(doc, "Khác với tiếng Anh nơi các từ đơn được phân cách rõ ràng bằng dấu cách, tiếng Việt sử dụng từ ghép đa âm tiết làm đơn vị ngữ nghĩa cơ bản. Nhóm tích hợp công cụ xử lý ngôn ngữ tự nhiên `underthesea` áp dụng mô hình Trường ngẫu nhiên có điều kiện (Conditional Random Fields - CRF) kết hợp thuật toán Viterbi để xác định ranh giới từ ghép chính xác. Các âm tiết thuộc cùng một từ được liên kết bằng dấu gạch dưới (ví dụ: 'chuyển_tiền_nhanh', 'nhân_viên_thân_thiện', 'lỗi_kết_nối', 'quét_mã_qr').")
 
-    add_heading_2(doc, "2.2. Xây dựng không gian đặc trưng bằng TF-IDF và Chuẩn hóa L2-norm (Chương 2 GT Học máy ICTU)")
+    add_heading_2(doc, "2.2. Xây dựng không gian đặc trưng bằng TF-IDF và Chuẩn hóa L2-norm")
     add_body_p(doc, "Theo Chương 2 (Các kỹ thuật xây dựng đặc trưng, Mục 2.3 và 2.4, tr. 40 - 58) của Giáo trình Học máy ICTU, mô hình học máy chỉ có thể tiếp nhận đầu vào là các vector số học trong không gian nhiều chiều. Kỹ thuật TF-IDF (Term Frequency - Inverse Document Frequency) là phương pháp gán trọng số cho từng từ ghép phản ánh chính xác mức độ quan trọng của từ đó trong văn bản.")
 
     add_heading_3(doc, "2.2.1. Tần suất từ (Term Frequency - TF) và Sublinear TF Scaling")
@@ -98,7 +98,7 @@ def add_chapter2(doc):
     add_math_block(doc, "x_{norm} = x / ||x||₂ = x / √(∑_{j=1}^d x_j²)", "2.4")
     add_body_p(doc, "Chuẩn hóa L2-norm đảm bảo rằng mọi vector biểu diễn văn bản đều nằm trên mặt cầu đơn vị trong không gian R^d, triệt tiêu hoàn toàn sự sai lệch do độ dài văn bản ngắn (2 từ) hay dài (hàng trăm từ).")
 
-    add_heading_2(doc, "2.3. Cơ sở toán học Bộ phân loại Naive Bayes (Chương 6 GT Học máy ICTU)")
+    add_heading_2(doc, "2.3. Cơ sở toán học Bộ phân loại Naive Bayes")
     add_body_p(doc, "Multinomial Naive Bayes (MNB) được trình bày chi tiết tại Chương 6 (Bộ phân loại Naive Bayes, tr. 104 - 118) của Giáo trình Học máy. Đây là mô hình phân loại dựa trên xác suất hậu nghiệm (Posterior Probability) kết hợp định lý Bayes:")
     add_math_block(doc, "P(y | x) = [ P(y) × P(x | y) ] / P(x)", "2.5")
     
@@ -111,7 +111,7 @@ def add_chapter2(doc):
     add_body_p(doc, "Quy tắc quyết định tối ưu Bayes (Bayes Decision Rule) trong không gian log-likelihood:")
     add_math_block(doc, "ŷ = argmax_{y ∈ {0, 1}} [ log P(y) + ∑_{j=1}^d x_j log P(w_j | y) ]", "2.8")
 
-    add_heading_2(doc, "2.4. Cơ sở toán học Hồi quy Logistic và Điều chuẩn L2 (Chương 9 GT Học máy ICTU)")
+    add_heading_2(doc, "2.4. Cơ sở toán học Hồi quy Logistic và Điều chuẩn L2")
     add_body_p(doc, "Chương 9 (Hồi quy Logistic, tr. 154 - 169) trình bày mô hình phân loại nhị phân dựa trên hàm kích hoạt Sigmoid:")
     add_math_block(doc, "P(y = 1 | x; w, b) = σ(w^T x + b) = 1 / [ 1 + e^{-(w^T x + b)} ]", "2.9")
     add_math_block(doc, "P(y = 0 | x; w, b) = 1 - σ(w^T x + b) = e^{-(w^T x + b)} / [ 1 + e^{-(w^T x + b)} ]", "2.10")
@@ -123,7 +123,7 @@ def add_chapter2(doc):
     add_math_block(doc, "∇_w J(w, b) = (1/N) X^T (σ(Xw + b) - y) + (1/C) w", "2.12")
     add_body_p(doc, "Ma trận Hessian đạo hàm bậc hai H = ∇²_w J(w) = (1/N) X^T D X + (1/C) I (với D là ma trận đường chéo D_ii = σ_i(1 - σ_i) > 0) luôn là ma trận nửa xác định dương, chứng minh rằng hàm mất mát là lồi nghiêm ngặt (Strictly Convex) và đảm bảo thuật toán L-BFGS luôn hội tụ tới nghiệm tối ưu toàn cục duy nhất.")
 
-    add_heading_2(doc, "2.5. Cơ sở toán học Máy vector hỗ trợ - SVM (Chương 10 GT Học máy ICTU)")
+    add_heading_2(doc, "2.5. Cơ sở toán học Máy vector hỗ trợ (LinearSVC)")
     add_body_p(doc, "Chương 10 (Máy vector hỗ trợ - SVM, tr. 170 - 181) của Giáo trình Học máy là nền tảng lý thuyết cốt lõi của đề tài. Mục tiêu của SVM là tìm một siêu phẳng phân tách tuyến tính w^T x + b = 0 sao cho khoảng cách lề hình học (Geometric Margin) giữa hai lớp là lớn nhất.")
 
     add_body_p(doc, "Bài toán tối ưu hóa biên mềm (Soft-Margin SVM) dạng gốc (Primal Formulation):")
@@ -146,7 +146,7 @@ def add_chapter2(doc):
     add_math_block(doc, "min_{w}  (1/2) ||w||₂² + C ∑_{i=1}^N [ max(0, 1 - y_i (w^T x_i + b)) ]²", "2.17")
     add_body_p(doc, "Hàm mục tiêu này khả vi liên tục bậc nhất, cho phép giải thuật hạ dốc tọa độ kép (Dual Coordinate Descent) trong LIBLINEAR hội tụ với độ phức tạp thời gian O(N × d) tuyến tính theo số mẫu và số chiều đặc trưng, hoàn toàn vượt trội so với các thuật toán QP bậc ba O(N³).")
 
-    add_heading_2(doc, "2.6. Cơ sở toán học Mô hình Rừng ngẫu nhiên - Random Forest (Chương 8 & 14 GT Học máy ICTU)")
+    add_heading_2(doc, "2.6. Cơ sở toán học Mô hình Rừng ngẫu nhiên (Random Forest)")
     add_body_p(doc, "Được trình bày tại Chương 8 (Cây quyết định, tr. 132 - 153) và Chương 14 (Dự án học máy tiêu biểu, tr. 248 - 254), Rừng ngẫu nhiên (Random Forest) là thuật toán học kết hợp (Ensemble Learning) dựa trên kỹ thuật đóng bao (Bagging - Bootstrap Aggregating).")
 
     add_body_p(doc, "Tiêu chí phân chia nút dựa trên độ vẩn đục Gini Impurity (Gini Index):")

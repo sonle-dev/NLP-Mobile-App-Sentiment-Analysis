@@ -16,13 +16,13 @@ from .helpers import (
 )
 
 def add_chapter3(doc):
-    add_heading_1(doc, "CHƯƠNG 3: KẾT QUẢ THỰC NGHIỆM VÀ ĐÁNH GIÁ THEO TIÊU CHÍ CHẤM")
+    add_heading_1(doc, "CHƯƠNG 3: KẾT QUẢ THỰC NGHIỆM VÀ ĐÁNH GIÁ HỆ THỐNG")
 
     # -------------------------------------------------------------
     # 3.1. THU THẬP, PHÂN TÍCH VÀ TRỰC QUAN HÓA DỮ LIỆU EDA (1.5 đ)
     # -------------------------------------------------------------
-    add_heading_2(doc, "3.1. Thu thập, phân tích và trực quan hóa dữ liệu EDA (Mục 1 Tiêu chí chấm - 1.5 đ)")
-    add_body_p(doc, "Tuân thủ chặt chẽ Mục 1 trong Barem Tiêu chí chấm (1.5 điểm), nhóm đã thực hiện thu thập dữ liệu tự động từ kho ứng dụng Google Play Store và Apple App Store thông qua API cào dữ liệu chuyên dụng. Tập dữ liệu sau khi tiền xử lý và loại bỏ các bản ghi trùng lặp đạt quy mô 14.910 đánh giá người dùng thực tế tại thị trường Việt Nam.")
+    add_heading_2(doc, "3.1. Thu thập, phân tích và trực quan hóa dữ liệu (EDA)")
+    add_body_p(doc, "Trong giai đoạn đầu của dự án, nhóm đã thực hiện thu thập dữ liệu tự động từ kho ứng dụng Google Play Store và Apple App Store thông qua API cào dữ liệu chuyên dụng. Tập dữ liệu sau khi tiền xử lý và loại bỏ các bản ghi trùng lặp đạt quy mô 14.910 đánh giá người dùng thực tế tại thị trường Việt Nam.")
 
     add_body_p(doc, "Tập dữ liệu bao phủ 8 ứng dụng di động công nghệ đầu ngành thuộc 4 lĩnh vực tiêu biểu của nền kinh tế số: Ngân hàng số (MB Bank, Agribank), Ví điện tử Fintech (MoMo, ZaloPay), Thương mại điện tử & Giao đồ ăn (Shopee, ShopeeFood, Grab), và Mạng xã hội video ngắn (TikTok).")
 
@@ -123,7 +123,7 @@ def add_chapter3(doc):
     # -------------------------------------------------------------
     # 3.2. TIỀN XỬ LÝ DỮ LIỆU VÀ BỘ LỌC KHỬ NHIỄU NGHỊCH NHÃN (1.5 đ)
     # -------------------------------------------------------------
-    add_heading_2(doc, "3.2. Tiền xử lý dữ liệu và Khử nhiễu nghịch nhãn (Mục 2 Tiêu chí chấm - 1.5 đ)")
+    add_heading_2(doc, "3.2. Tiền xử lý dữ liệu và Khử nhiễu nghịch nhãn")
     add_body_p(doc, "Trong quá trình phân tích dữ liệu, nhóm phát hiện một lỗ hổng chí mạng của phương pháp gán nhãn tự động truyền thống dựa trên số sao (Rating-based Labelling: 1-2-3 sao gán nhãn Tiêu cực, 4-5 sao gán nhãn Tích cực):")
     
     add_callout(doc, [
@@ -215,8 +215,8 @@ def add_chapter3(doc):
     # -------------------------------------------------------------
     # 3.3. HUẤN LUYỆN MÔ HÌNH HỌC MÁY (1.0 đ)
     # -------------------------------------------------------------
-    add_heading_2(doc, "3.3. Huấn luyện mô hình học máy (Mục 3 Tiêu chí chấm - 1.0 đ)")
-    add_body_p(doc, "Tuân thủ Mục 3 Tiêu chí chấm (1.0 điểm), nhóm tiến hành phân chia tập dữ liệu 14.910 mẫu đã làm sạch thành 3 tập độc lập theo tỷ lệ chuẩn công nghiệp 70% Train - 15% Validation - 15% Test bằng phương pháp phân tầng Stratified Shuffle Split để giữ nguyên tỷ lệ nhãn cảm xúc và khía cạnh nghiệp vụ trên từng tập:")
+    add_heading_2(doc, "3.3. Huấn luyện các mô hình phân lớp học máy")
+    add_body_p(doc, "Sau khi hoàn thành tiền xử lý, nhóm tiến hành phân chia tập dữ liệu 14.910 mẫu đã làm sạch thành 3 tập độc lập theo tỷ lệ chuẩn công nghiệp 70% Train - 15% Validation - 15% Test bằng phương pháp phân tầng Stratified Shuffle Split để giữ nguyên tỷ lệ nhãn cảm xúc và khía cạnh nghiệp vụ trên từng tập:")
     add_body_p(doc, "• Tập huấn luyện (Training Set): 10.437 mẫu (70%) - dùng để fit trọng số mô hình.\n"
                   "• Tập phát triển (Validation Set): 2.236 mẫu (15%) - dùng để tinh chỉnh siêu tham số và chọn mô hình.\n"
                   "• Tập kiểm thử độc lập (Test Set): 2.237 mẫu (15%) - niêm phong hoàn toàn, chỉ dùng để đánh giá cuối cùng.")
@@ -273,8 +273,8 @@ def add_chapter3(doc):
     # -------------------------------------------------------------
     # 3.4. TÌM MÔ HÌNH TỐT NHẤT & TINH CHỈNH SIÊU THAM SỐ (1.5 đ)
     # -------------------------------------------------------------
-    add_heading_2(doc, "3.4. Tìm mô hình tốt nhất & Tinh chỉnh siêu tham số (Mục 4 Tiêu chí chấm - 1.5 đ)")
-    add_body_p(doc, "Để tìm kiếm cấu hình tối ưu và lựa chọn mô hình tốt nhất theo Mục 4 Tiêu chí chấm (1.5 điểm), nhóm thiết lập quy trình kiểm định chéo 5-fold Stratified Cross-Validation kết hợp giải thuật tìm kiếm lưới toàn diện (GridSearchCV).")
+    add_heading_2(doc, "3.4. Tìm mô hình tốt nhất và Tinh chỉnh siêu tham số")
+    add_body_p(doc, "Để tìm kiếm cấu hình tham số tối ưu và lựa chọn mô hình có khả năng tổng quát hóa cao nhất, nhóm thiết lập quy trình kiểm định chéo 5-fold Stratified Cross-Validation kết hợp giải thuật tìm kiếm lưới toàn diện (GridSearchCV).")
 
     add_body_p(doc, "Không gian tìm kiếm siêu tham số được khảo sát trên hai mô hình dẫn đầu (LinearSVC và Logistic Regression) qua các tham số điều chuẩn C ∈ [0.1, 0.5, 1.0, 2.0, 5.0, 10.0] và hàm mất mát loss ∈ ['hinge', 'squared_hinge']:")
 
@@ -407,7 +407,7 @@ def add_chapter3(doc):
         "TRỤ CỘT 3: KHẮC PHỤC TRIỆT ĐỂ VI PHẠM ĐỘC LẬP ĐIỀU KIỆN CỦA NAIVE BAYES.\n"
         "Naive Bayes giả định các từ độc lập điều kiện, nhưng trong tiếng Việt các từ ghép cặp luôn phụ thuộc lẫn nhau ('không' + 'thể' + 'đăng_nhập'). Việc giải định sai khiến MNB chỉ đạt F1 = 86.29%. LinearSVC và Logistic Regression là các mô hình phân biệt (Discriminative) tính toán trọng số tương quan w_j tự do, phản ánh đúng bản chất ngôn ngữ.",
 
-        "TRỤ CỘT 4: KIỂM ĐỊNH ĐỘC LẬP NGHIÊM NGẶT TRÊN UNSEEN TEST SET THEO GIÁO TRÌNH ICTU.\n"
+        "TRỤ CỘT 4: KIỂM ĐỊNH ĐỘC LẬP NGHIÊM NGẶT TRÊN UNSEEN TEST SET THEO NGUYÊN TẮC CÁCH LY DỮ LIỆU.\n"
         "Toàn bộ quy trình từ tiền xử lý, tính toán IDF đến tìm kiếm siêu tham số chỉ sử dụng dữ liệu tập Train. Tập Test gồm 2.237 mẫu được khóa kín hoàn toàn cho đến bước cuối cùng. Hiệu năng Test Set (90.38%) khớp hoàn toàn với hiệu năng CV tập Train (90.28% ± 0.32%), loại bỏ hoàn toàn khả năng rò rỉ dữ liệu."
     ], "4 TRỤ CỘT KHOA HỌC CHỨNG MINH TÍNH ĐÚNG ĐẮN VÀ TIN CẬY CỦA KẾT QUẢ:")
 
@@ -523,8 +523,8 @@ def add_chapter3(doc):
 
     add_body_p(doc, "\nBảng 3.5.2: Báo cáo hiệu năng chi tiết trên từng lớp khía cạnh nghiệp vụ bằng mô hình LinearSVC")
 
-    add_heading_2(doc, "3.6. Đánh giá và Phân tích lỗi - Error Analysis (Mục 5 Tiêu chí chấm - 1.5 đ)")
-    add_body_p(doc, "Tuân thủ chặt chẽ Mục 5 Tiêu chí chấm (1.5 điểm), việc đánh giá một hệ thống học máy không dừng lại ở các con số thống kê tổng quát, mà phải tiến hành mổ xẻ định tính các trường hợp mô hình dự đoán sai lệch (Error Analysis) nhằm tìm ra nguyên nhân gốc rễ (Root Cause) và đề xuất giải pháp kỹ thuật khắc phục.")
+    add_heading_2(doc, "3.6. Đánh giá chi tiết và Phân tích lỗi (Error Analysis)")
+    add_body_p(doc, "Trong kỹ thuật học máy thực nghiệm, việc đánh giá một hệ thống không dừng lại ở các con số thống kê tổng quát, không dừng lại ở các con số thống kê tổng quát, mà phải tiến hành mổ xẻ định tính các trường hợp mô hình dự đoán sai lệch (Error Analysis) nhằm tìm ra nguyên nhân gốc rễ (Root Cause) và đề xuất giải pháp kỹ thuật khắc phục.")
 
     add_body_p(doc, "Nhóm đã rà soát toàn bộ các mẫu bị phân loại sai trên tập Test Set (2.237 mẫu) và lập bảng phân tích chuyên sâu cho 20 ca lỗi điển hình nhất (bao gồm 10 ca Dương tính giả - False Positive và 10 ca Âm tính giả - False Negative):")
 
@@ -643,8 +643,8 @@ def add_chapter3(doc):
     # -------------------------------------------------------------
     # 3.7. DỰ ĐOÁN TRÊN DỮ LIỆU MỚI VÀ TRIỂN KHAI HỆ THỐNG (1.0 đ)
     # -------------------------------------------------------------
-    add_heading_2(doc, "3.7. Dự đoán trên dữ liệu mới và Triển khai hệ thống (Mục 6 Tiêu chí chấm - 1.0 đ)")
-    add_body_p(doc, "Tuân thủ Mục 6 Tiêu chí chấm (1.0 điểm), toàn bộ các mô hình tối ưu đã huấn luyện được đóng gói thành các tệp nhị phân tuần tự hóa `best_sentiment_model.joblib`, `best_aspect_model.joblib` và `tfidf_vectorizer.joblib` với tổng kích thước siêu nhẹ chỉ 8.4 MB.")
+    add_heading_2(doc, "3.7. Dự đoán trên dữ liệu mới và Triển khai hệ thống")
+    add_body_p(doc, "Sau khi hoàn thành đánh giá thực nghiệm, toàn bộ các mô hình tối ưu đã huấn luyện được đóng gói thành các tệp nhị phân tuần tự hóa `best_sentiment_model.joblib`, `best_aspect_model.joblib` và `tfidf_vectorizer.joblib` với tổng kích thước siêu nhẹ chỉ 8.4 MB.")
 
     add_body_p(doc, "Nhóm đã xây dựng hoàn chỉnh một hàm suy luận thời gian thực và kiểm thử dự đoán trên 5 kịch bản phản hồi hoàn toàn mới ngoài thực tế:")
 

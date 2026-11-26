@@ -12,7 +12,7 @@ from .helpers import (
 def add_chapter3(doc):
     add_heading_1(doc, "CHƯƠNG 3: KẾT QUẢ THỰC NGHIỆM VÀ ĐÁNH GIÁ THEO TIÊU CHÍ CHẤM")
     
-    add_heading_2(doc, "3.1. Thu thập, phân tích và trực quan hóa dữ liệu EDA (Mục 1 Tiêu chí chấm - 1.5 đ)")
+    add_heading_2(doc, "3.1. Thu thập, phân tích và trực quan hóa dữ liệu (EDA)")
     add_body_p(doc, "Thực hiện Chuẩn đầu ra G1.2, G2.1 và CĐR CTĐT L3, L13, Nhóm 12 đã tiến hành thu thập, thẩm định và chuẩn hóa tập dữ liệu gồm 14.910 phản hồi thực tế từ Google Play Store và Apple App Store trên 8 ứng dụng di động hàng đầu tại Việt Nam.")
 
     # Table 3.1 Detailed app statistics
@@ -71,7 +71,7 @@ def add_chapter3(doc):
 
     add_image_with_caption(doc, "reports/figures/aspect_overview_7groups.png", "Hình 3.1: Phân bố 7 Khía cạnh nghiệp vụ và Tỷ lệ Cảm xúc theo từng khía cạnh (14.910 mẫu)", width_in=6.2)
 
-    add_heading_2(doc, "3.2. Tiền xử lý dữ liệu và Khử nhiễu nghịch nhãn (Mục 2 Tiêu chí chấm - 1.5 đ)")
+    add_heading_2(doc, "3.2. Tiền xử lý dữ liệu và Khử nhiễu nghịch nhãn")
     add_body_p(doc, "Nhóm lập trình bộ lọc tự động kiểm toán nhãn (Sarcasm & Bias Audit) xử lý triệt để 50 trường hợp nghịch nhãn. Dưới đây là bảng trích xuất 10 ca kiểm toán điển hình minh chứng:")
 
     # Table 3.2 Audit samples
@@ -131,10 +131,10 @@ def add_chapter3(doc):
 
     add_body_p(doc, "\nBảng 3.2: Danh sách minh chứng 10 mẫu đánh giá nghịch nhãn cảm xúc được kiểm toán và xử lý khử nhiễu")
 
-    add_heading_2(doc, "3.3. Huấn luyện mô hình học máy (Mục 3 Tiêu chí chấm - 1.0 đ)")
+    add_heading_2(doc, "3.3. Huấn luyện các mô hình phân lớp học máy")
     add_body_p(doc, "Thực hiện Chuẩn đầu ra G3.1, G3.2 và CĐR CTĐT L4, nhóm thiết lập môi trường thực nghiệm đồng nhất trên hệ thống máy tính cấu hình: CPU AMD Ryzen 7 / Intel Core i7, 16GB RAM, Windows 11 64-bit, Python 3.13.0 cùng bộ thư viện Scikit-learn phiên bản 1.5.2.")
 
-    add_heading_2(doc, "3.4. Tìm mô hình tốt nhất & Tinh chỉnh siêu tham số (Mục 4 Tiêu chí chấm - 1.5 đ)")
+    add_heading_2(doc, "3.4. Tìm mô hình tốt nhất và Tinh chỉnh siêu tham số")
     add_body_p(doc, "Tiến hành đánh giá khách quan 4 mô hình học máy trên tập Kiểm thử độc lập (Test Set: 2.237 mẫu). Toàn bộ các chỉ số được đo đạc chính xác tuyệt đối:")
 
     # Table 3.3 Benchmark
@@ -207,7 +207,7 @@ def add_chapter3(doc):
                   "3. Trụ cột 3 - Kiểm định độc lập tuyệt đối trên Unseen Test Set: Tập kiểm thử 2.237 mẫu được tách riêng biệt ngay từ đầu (Stratified Split 70/15/15). Bộ vector hóa TF-IDF chỉ được fit trên tập Train và chỉ transform trên tập Test, đảm bảo tuyệt đối không xảy ra hiện tượng rò rỉ dữ liệu (Data Leakage).\n\n"
                   "4. Trụ cột 4 - Tính ổn định của Macro F1 và F1 theo từng lớp: Mặc dù tập dữ liệu mất cân bằng (70% Tiêu cực vs 30% Tích cực), LinearSVC vẫn đạt F1 Tiêu cực 94.49% và F1 Tích cực 86.27% (Macro F1 = 90.38%). Điều này chứng minh mô hình học sâu bản chất ngôn ngữ chứ không đoán mò theo lớp chiếm ưu thế.")
 
-    add_heading_2(doc, "3.6. Đánh giá và Phân tích lỗi - Error Analysis (Mục 5 Tiêu chí chấm - 1.5 đ)")
+    add_heading_2(doc, "3.6. Đánh giá chi tiết và Phân tích lỗi (Error Analysis)")
     add_image_with_caption(doc, "reports/figures/confusion_matrix_best_model.png", "Hình 3.3: Ma trận nhầm lẫn (Confusion Matrix) của mô hình tốt nhất LinearSVC trên 2.237 mẫu Test", width_in=4.8)
 
     add_body_p(doc, "Từ ma trận nhầm lẫn, mô hình dự đoán chính xác 1.488 / 1.569 mẫu Tiêu cực (Độ nhạy: 94.84%) và 573 / 668 mẫu Tích cực (Độ nhạy: 85.78%). Tổng số ca dự đoán sai lệch là 176 mẫu (chiếm 7.87%). Nhóm tiến hành mổ xẻ định tính nguyên nhân:")
@@ -308,7 +308,7 @@ def add_chapter3(doc):
 
     add_image_with_caption(doc, "reports/figures/top_features_weights.png", "Hình 3.4: Top 12 Từ/Cụm từ quyết định trọng số nhãn Tiêu cực và Tích cực của mô hình LinearSVC", width_in=6.2)
 
-    add_heading_2(doc, "3.7. Dự đoán trên dữ liệu mới và Triển khai hệ thống (Mục 6 Tiêu chí chấm - 1.0 đ)")
+    add_heading_2(doc, "3.7. Dự đoán trên dữ liệu mới và Triển khai hệ thống")
     add_body_p(doc, "Thực hiện Chuẩn đầu ra G5.1, G5.2 và CĐR CTĐT L14, nhóm đóng gói toàn bộ mô hình thành hàm suy luận thời gian thực `predict_user_review(raw_text)` và kiểm thử thực nghiệm trên 10 mẫu đánh giá hoàn toàn mới:")
 
     # Table 3.7 Inference

@@ -112,8 +112,8 @@ def add_chapter2(doc):
     # -------------------------------------------------------------
     # 2.2. XÂY DỰNG KHÔNG GIAN ĐẶC TRƯNG TF-IDF N-GRAM
     # -------------------------------------------------------------
-    add_heading_2(doc, "2.2. Xây dựng không gian đặc trưng bằng TF-IDF và Chuẩn hóa L2-norm (Chương 2 GT Học máy ICTU)")
-    add_body_p(doc, "Theo Chương 2 Giáo trình Học máy ICTU (năm 2026, tr. 45 - 52), để các thuật toán học máy có thể tính toán trên dữ liệu văn bản, ta cần chuyển đổi các chuỗi ký tự thành các vector số thực trong không gian Euclide. Phương pháp TF-IDF (Term Frequency - Inverse Document Frequency) kết hợp N-gram là kỹ thuật biểu diễn kinh điển nhưng đặc biệt hiệu quả, đánh giá tầm quan trọng của một từ vựng dựa trên tần suất xuất hiện cục bộ trong văn bản và độ hiếm gặp trên toàn bộ kho ngữ liệu.")
+    add_heading_2(doc, "2.2. Xây dựng không gian đặc trưng bằng TF-IDF và Chuẩn hóa L2-norm")
+    add_body_p(doc, "Để các thuật toán học máy có thể tính toán trên dữ liệu văn bản tự nhiên, ta cần chuyển đổi các chuỗi ký tự thành các vector số thực trong không gian Euclide. Phương pháp TF-IDF (Term Frequency - Inverse Document Frequency) kết hợp N-gram là kỹ thuật biểu diễn kinh điển nhưng đặc biệt hiệu quả, đánh giá tầm quan trọng của một từ vựng dựa trên tần suất xuất hiện cục bộ trong văn bản và độ hiếm gặp trên toàn bộ kho ngữ liệu.")
 
     add_heading_3(doc, "2.2.1. Tần suất từ (Term Frequency - TF) và Sublinear TF Scaling")
     add_body_p(doc, "Tần suất từ thô (Raw Term Frequency) tf(t, d) đếm số lần từ t xuất hiện trong văn bản d. Tuy nhiên, nếu một từ xuất hiện 20 lần trong một phản hồi thì tầm quan trọng của nó không thể cao gấp 20 lần so với một phản hồi chỉ chứa từ đó 1 lần. Để tránh hiện tượng các từ lặp lại nhiều lần lấn át các từ khác, nhóm áp dụng kỹ thuật hàm logarit dưới tuyến tính (Sublinear TF Scaling):")
@@ -135,8 +135,8 @@ def add_chapter2(doc):
     # -------------------------------------------------------------
     # 2.3. CƠ SỞ TOÁN HỌC BỘ PHÂN LOẠI NAIVE BAYES
     # -------------------------------------------------------------
-    add_heading_2(doc, "2.3. Cơ sở toán học Bộ phân loại Naive Bayes (Chương 6 GT Học máy ICTU)")
-    add_body_p(doc, "Theo Chương 6 Giáo trình Học máy ICTU (năm 2026, tr. 142 - 156), bộ phân loại Naive Bayes là một trong những giải thuật phân lớp xác suất thống kê cơ bản và kinh điển nhất. Cho vector đặc trưng văn bản x = (x_1, x_2, ..., x_d) và tập các lớp mục tiêu C = {Tích cực, Tiêu cực}. Theo Định lý Bayes, xác suất hậu nghiệm (Posterior Probability) của lớp c khi quan sát văn bản x là:")
+    add_heading_2(doc, "2.3. Cơ sở toán học Bộ phân loại Naive Bayes")
+    add_body_p(doc, "Bộ phân loại Naive Bayes là một trong những giải thuật phân lớp xác suất thống kê cơ bản và kinh điển nhất. Cho vector đặc trưng văn bản x = (x_1, x_2, ..., x_d) và tập các lớp mục tiêu C = {Tích cực, Tiêu cực}. Theo Định lý Bayes, xác suất hậu nghiệm (Posterior Probability) của lớp c khi quan sát văn bản x là:")
     add_math_block(doc, "P(y = c | x) = [ P(y = c) · P(x | y = c) ] / P(x)", "2.8")
     
     add_body_p(doc, "Trong đó, mẫu số P(x) = ∑_{c' ∈ C} P(y = c') P(x | y = c') là hằng số chuẩn hóa không phụ thuộc vào lớp c. Do đó, bài toán phân lớp quy về việc tìm lớp c cực đại hóa xác suất đồng thời (Maximum A Posteriori - MAP):")
@@ -154,8 +154,8 @@ def add_chapter2(doc):
     # -------------------------------------------------------------
     # 2.4. CƠ SỞ TOÁN HỌC HỒI QUY LOGISTIC VÀ ĐIỀU CHUẨN L2
     # -------------------------------------------------------------
-    add_heading_2(doc, "2.4. Cơ sở toán học Hồi quy Logistic và Điều chuẩn L2 (Chương 9 GT Học máy ICTU)")
-    add_body_p(doc, "Theo Chương 9 Giáo trình Học máy ICTU (năm 2026, tr. 215 - 230), Hồi quy Logistic (Logistic Regression) là mô hình phân loại tuyến tính xác suất thuộc lớp mô hình phân biệt (Discriminative Models). Mô hình mô hình hóa trực tiếp xác suất hậu nghiệm P(y = 1 | x) thông qua hàm kích hoạt phi tuyến Sigmoid (Logistic Function):")
+    add_heading_2(doc, "2.4. Cơ sở toán học Hồi quy Logistic và Điều chuẩn L2")
+    add_body_p(doc, "Hồi quy Logistic (Logistic Regression) là mô hình phân loại tuyến tính xác suất thuộc lớp mô hình phân biệt (Discriminative Models). Mô hình mô hình hóa trực tiếp xác suất hậu nghiệm P(y = 1 | x) thông qua hàm kích hoạt phi tuyến Sigmoid (Logistic Function):")
     add_math_block(doc, "σ(z) = 1 / (1 + e^{-z})", "2.13")
     add_body_p(doc, "Với z = w^T x + b, trong đó w ∈ R^d là vector trọng số và b ∈ R là hệ số định kiến. Hàm Sigmoid có các tính chất giải tích tuyệt vời: miền giá trị nằm hoàn toàn trong khoảng mở (0, 1), đồ thị hình chữ S đối xứng qua tâm (0, 0.5), và đạo hàm bậc nhất có dạng đóng cực kỳ thanh lịch: σ'(z) = σ(z)(1 - σ(z)).")
     
@@ -173,8 +173,8 @@ def add_chapter2(doc):
     # -------------------------------------------------------------
     # 2.5. CƠ SỞ TOÁN HỌC MÁY VECTOR HỖ TRỢ - SVM (LINEARSVC)
     # -------------------------------------------------------------
-    add_heading_2(doc, "2.5. Cơ sở toán học Máy vector hỗ trợ - SVM (Chương 10 GT Học máy ICTU)")
-    add_body_p(doc, "Theo Chương 10 Giáo trình Học máy ICTU (năm 2026, tr. 245 - 268), Máy vector hỗ trợ (Support Vector Machines - SVM) do Vladimir Vapnik và Corinna Cortes phát minh là một trong những thuật toán học máy có nền tảng toán học đại số và hình học vững chắc nhất. Thay vì tối thiểu hóa sai số kinh nghiệm thông thường (Empirical Risk Minimization), SVM tối thiểu hóa sai số cấu trúc (Structural Risk Minimization) nhằm tìm kiếm một siêu phẳng phân tách có khoảng cách lề (Margin) rộng nhất đối với các điểm dữ liệu của cả hai lớp.")
+    add_heading_2(doc, "2.5. Cơ sở toán học Máy vector hỗ trợ (LinearSVC)")
+    add_body_p(doc, "Máy vector hỗ trợ (Support Vector Machines - SVM) do Vladimir Vapnik và Corinna Cortes phát minh là một trong những thuật toán học máy có nền tảng toán học đại số và hình học vững chắc nhất. Thay vì tối thiểu hóa sai số kinh nghiệm thông thường (Empirical Risk Minimization), SVM tối thiểu hóa sai số cấu trúc (Structural Risk Minimization) nhằm tìm kiếm một siêu phẳng phân tách có khoảng cách lề (Margin) rộng nhất đối với các điểm dữ liệu của cả hai lớp.")
 
     add_body_p(doc, "Cho tập dữ liệu D = {(x_i, y_i)}_{i=1}^N với x_i ∈ R^d và y_i ∈ {-1, +1}. Siêu phẳng phân cách tuyến tính được định nghĩa:")
     add_math_block(doc, "w^T x + b = 0", "2.18")
@@ -204,8 +204,8 @@ def add_chapter2(doc):
     # -------------------------------------------------------------
     # 2.6. CƠ SỞ TOÁN HỌC RỪNG NGẪU NHIÊN - RANDOM FOREST
     # -------------------------------------------------------------
-    add_heading_2(doc, "2.6. Cơ sở toán học Mô hình Rừng ngẫu nhiên - Random Forest (Chương 8 & 14 GT Học máy ICTU)")
-    add_body_p(doc, "Theo Chương 8 và Chương 14 Giáo trình Học máy ICTU (năm 2026, tr. 190 - 212 & 335 - 350), Rừng ngẫu nhiên (Random Forest - RF) do Leo Breiman đề xuất là phương pháp học kết hợp (Ensemble Learning) hoạt động dựa trên nguyên lý Đóng bao (Bootstrap Aggregating - Bagging). Mô hình xây dựng một tập hợp gồm B cây quyết định độc lập {T_1, T_2, ..., T_B}.")
+    add_heading_2(doc, "2.6. Cơ sở toán học Mô hình Rừng ngẫu nhiên (Random Forest)")
+    add_body_p(doc, "Rừng ngẫu nhiên (Random Forest - RF) do Leo Breiman đề xuất là phương pháp học kết hợp (Ensemble Learning) hoạt động dựa trên nguyên lý Đóng bao (Bootstrap Aggregating - Bagging). Mô hình xây dựng một tập hợp gồm B cây quyết định độc lập {T_1, T_2, ..., T_B}.")
 
     add_body_p(doc, "Tại mỗi nút phân nhánh của cây quyết định, giải thuật tìm kiếm điểm chia cắt tối ưu dựa trên độ đo vẩn đục Gini Impurity:")
     add_math_block(doc, "Gini(m) = 1 - ∑_{k=1}^K p_{mk}²", "2.27")

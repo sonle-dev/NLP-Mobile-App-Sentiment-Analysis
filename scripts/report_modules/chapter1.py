@@ -80,7 +80,7 @@ def add_chapter1(doc):
 
     add_body_p(doc, "\nBảng 1.1: So sánh đối sánh các trường phái tiếp cận trong bài toán Phân tích quan điểm NLP")
 
-    add_heading_2(doc, "1.2. Quy trình thực hiện dự án học máy tiêu chuẩn (Chương 1 GT Học máy ICTU)")
+    add_heading_2(doc, "1.2. Quy trình thực hiện dự án học máy tiêu chuẩn")
     add_body_p(doc, "Nhóm 12 triển khai đề tài bám sát hoàn toàn Quy trình 7 bước thực hiện dự án học máy tiêu chuẩn được quy định tại Mục 1.8 của Giáo trình Học máy ICTU:")
 
     # Detailed table for 7 steps
@@ -135,7 +135,7 @@ def add_chapter1(doc):
 
     add_heading_2(doc, "1.3. Sự đánh đổi giữa Thiên lệch và Phương sai (Bias - Variance Tradeoff)")
     add_heading_3(doc, "1.3.1. Chứng minh toán học công thức phân rã sai số kỳ vọng")
-    add_body_p(doc, "Theo Mục 1.7 (tr. 33 - 35) của Giáo trình Học máy ICTU, sự đánh đổi giữa Thiên lệch (Bias) và Phương sai (Variance) là nguyên lý trung tâm chi phối khả năng tổng quát hóa của mọi mô hình học máy. Giả sử dữ liệu được sinh ra từ mối quan hệ thực tế: y = f(x) + ε, trong đó ε là nhiễu ngẫu nhiên độc lập với tập dữ liệu huấn luyện D, thỏa mãn kỳ vọng E[ε] = 0 và phương sai Var(ε) = σ².")
+    add_body_p(doc, "Trong lý thuyết học máy thống kê (Statistical Learning Theory), sự đánh đổi giữa Thiên lệch (Bias) và Phương sai (Variance) là nguyên lý toán học trung tâm chi phối khả năng tổng quát hóa của mọi mô hình học máy. Giả sử dữ liệu được sinh ra từ mối quan hệ thực tế: y = f(x) + ε, trong đó ε là nhiễu ngẫu nhiên độc lập với tập dữ liệu huấn luyện D, thỏa mãn kỳ vọng E[ε] = 0 và phương sai Var(ε) = σ².")
     
     add_body_p(doc, "Xét sai số toàn phương kỳ vọng đối với một điểm dữ liệu mới x khi lấy kỳ vọng trên toàn bộ các tập huấn luyện D có thể có:")
     add_math_block(doc, "E_D[(y - f̂(x))²] = E_D[(f(x) + ε - f̂(x))²]", "1.2")

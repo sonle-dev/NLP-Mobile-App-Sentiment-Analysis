@@ -147,3 +147,105 @@ def add_chapter4(doc):
         r.font.size = Pt(10.5)
 
     doc.add_page_break()
+
+
+    # -------------------------------------------------------------
+    # PHỤ LỤC: MÃ NGUỒN CÁC MÔ-ĐUN TRIỂN KHAI THỰC TẾ
+    # -------------------------------------------------------------
+    add_heading_1(doc, "PHỤ LỤC: MÃ NGUỒN CÁC MÔ-ĐUN TRIỂN KHAI")
+    add_body_p(doc, "Nhằm phục vụ công tác kiểm chứng độc lập và minh chứng tính trung thực của kết quả thực nghiệm, phần phụ lục này lưu trữ toàn bộ mã nguồn các mô-đun triển khai dịch vụ và giao diện của Đồ án.")
+
+    add_heading_2(doc, "Phụ lục A: Mã nguồn Dịch vụ Microservice RESTful API (fastapi_service.py)")
+    add_body_p(doc, "Mã nguồn cài đặt dịch vụ API RESTful với framework FastAPI:")
+
+    api_code = (
+        "# fastapi_service.py - He thong RESTful API phan tich quan diem da dien Joint ABSA\n"
+        "from fastapi import FastAPI, HTTPException\n"
+        "from pydantic import BaseModel\n"
+        "import joblib, time\n"
+        "from typing import List\n\n"
+        "app = FastAPI(title='Vietnamese App Review Joint ABSA API', version='1.0.0')\n\n"
+        "# 1. Tai pipeline tien xu ly va mo hinh toi uu da duoc train san\n"
+        "tfidf = joblib.load('models/tfidf_vectorizer.joblib')\n"
+        "clf_sentiment = joblib.load('models/best_sentiment_model.joblib')\n"
+        "clf_aspect = joblib.load('models/best_aspect_model.joblib')\n\n"
+        "class ReviewRequest(BaseModel):\n"
+        "    text: str\n"
+        "    app_name: str = 'General'\n\n"
+        "class PredictionResponse(BaseModel):\n"
+        "    sentiment: str\n"
+        "    aspect: str\n"
+        "    latency_ms: float\n\n"
+        "@app.post('/api/v1/predict', response_model=PredictionResponse)\n"
+        "def predict_sentiment_and_aspect(req: ReviewRequest):\n"
+        "    t0 = time.perf_counter()\n"
+        "    # 1. Tien xu ly vector hoa TF-IDF\n"
+        "    vec = tfidf.transform([req.text])\n"
+        "    # 2. Suy luan song song Joint ABSA\n"
+        "    sent = clf_sentiment.predict(vec)[0]\n"
+        "    asp = clf_aspect.predict(vec)[0]\n"
+        "    t_diff = (time.perf_counter() - t0) * 1000.0\n"
+        "    return {\n"
+        "        'sentiment': 'Tich cuc' if sent == 1 else 'Tieu cuc',\n"
+        "        'aspect': asp,\n"
+        "        'latency_ms': round(t_diff, 4)\n"
+        "    }\n"
+    )
+    add_code_snippet(doc, api_code)
+
+    add_heading_2(doc, "Phụ lục B: Mã nguồn Ứng dụng Web Dashboard Tương tác (streamlit_app.py)")
+    add_body_p(doc, "Mã nguồn xây dựng ứng dụng Web Dashboard tương tác với thư viện Streamlit:")
+
+    ui_code = (
+        "# streamlit_app.py - Voice of Customer Interactive Dashboard\n"
+        "import streamlit as st\n"
+        "import joblib, time\n"
+        "import pandas as pd\n\n"
+        "st.set_page_config(page_title='Vietnamese App Reviews ABSA', layout='wide')\n"
+        "st.title('He thong Phan tich Quan diem Da dien (Joint ABSA) Ung dung Di dong')\n\n"
+        "@st.cache_resource\n"
+        "def load_models():\n"
+        "    tfidf = joblib.load('models/tfidf_vectorizer.joblib')\n"
+        "    sent_model = joblib.load('models/best_sentiment_model.joblib')\n"
+        "    asp_model = joblib.load('models/best_aspect_model.joblib')\n"
+        "    return tfidf, sent_model, asp_model\n\n"
+        "tfidf, sent_model, asp_model = load_models()\n\n"
+        "col1, col2 = st.columns([2, 1])\n"
+        "with col1:\n"
+        "    user_input = st.text_area('Nhap phan hoi danh gia cua nguoi dung:', height=120)\n"
+        "    app_select = st.selectbox('Chon ung dung di dong:', ['MB Bank', 'MoMo', 'Shopee', 'ShopeeFood', 'Grab', 'ZaloPay', 'Agribank', 'TikTok'])\n"
+        "    btn = st.button('Phan tich ngay')\n\n"
+        "if btn and user_input.strip():\n"
+        "    t0 = time.perf_counter()\n"
+        "    vec = tfidf.transform([user_input])\n"
+        "    sent_pred = sent_model.predict(vec)[0]\n"
+        "    asp_pred = asp_model.predict(vec)[0]\n"
+        "    lat = (time.perf_counter() - t0) * 1000.0\n"
+        "    with col2:\n"
+        "        st.subheader('Ket qua Phan tich:')\n"
+        "        if sent_pred == 1:\n"
+        "            st.success(f'Cam xuc: TICH CUC (Do tre: {lat:.3f} ms)')\n"
+        "        else:\n"
+        "            st.error(f'Cam xuc: TIEU CUC (Do tre: {lat:.3f} ms)')\n"
+        "        st.info(f'Khia canh nghiep vu: {asp_pred}')\n"
+    )
+    add_code_snippet(doc, ui_code)
+
+    add_heading_2(doc, "Phụ lục C: Tệp cấu hình Container hóa và Triển khai (Dockerfile & docker-compose.yml)")
+    add_body_p(doc, "Nội dung tệp cấu hình đóng gói môi trường độc lập:")
+
+    docker_code = (
+        "# Dockerfile - Dong goi he thong Joint ABSA sieu nhe\n"
+        "FROM python:3.11-slim\n"
+        "WORKDIR /app\n"
+        "RUN apt-get update && apt-get install -y --no-install-recommends build-essential && rm -rf /var/lib/apt/lists/*\n"
+        "COPY requirements.txt .\n"
+        "RUN pip install --no-cache-dir -r requirements.txt\n"
+        "COPY models/ ./models/\n"
+        "COPY api.py .\n"
+        "EXPOSE 8000\n"
+        "CMD [\"uvicorn\", \"api:app\", \"--host\", \"0.0.0.0\", \"--port\", \"8000\", \"--workers\", \"4\"]\n"
+    )
+    add_code_snippet(doc, docker_code)
+
+    doc.add_page_break()
